@@ -1,0 +1,24 @@
+{
+  "name": "angularTemplate",
+  "version": "0.0.0",
+  "homepage": "",
+  "authors": [
+    "TGriffey <tgriffey9389@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5",
+    "angular": "~1.4.4",
+    "angular-route": "~1.4.4",
+    "angularfire": "~1.1.2",
+    "qwerty-hancock": "~0.5.1"
+  }
+}
