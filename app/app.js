@@ -1,4 +1,4 @@
-var app = angular.module("sYnthesYs", ['ngRoute', 'firebase']);
+var app = angular.module("sYnthesYs", ['ngRoute', 'firebase', 'ui.bootstrap']);
 
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
