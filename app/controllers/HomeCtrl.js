@@ -1,4 +1,4 @@
-app.controller("HomeCtrl", ["$scope", "instruments", "recordingFactory", function ($scope, instruments, recordingFactory) {
+app.controller("HomeCtrl", ["$scope", "instruments", "recordingFactory", "storage", function ($scope, instruments, recordingFactory, storage) {
 
     $scope.waveType = "";
     $scope.waveTypeList = ['Sine', 'Sawtooth', 'Triangle'];
@@ -8,8 +8,14 @@ app.controller("HomeCtrl", ["$scope", "instruments", "recordingFactory", functio
     $scope.instruments = instruments;
     $scope.chosenInstrument = "";
     $scope.showTable = false;
-    recordingFactory();
+    // recordingFactory();
+    // console.log(Recorder);
+    $(document).unbind('keypress');
 
+    $scope.closeAudio = function () {
+        gain.disconnect(context.destination);
+        $scope.vco = null;
+    };
 
 
     $scope.chooseInstrument = function (chosenInstrument) {
@@ -26,9 +32,8 @@ app.controller("HomeCtrl", ["$scope", "instruments", "recordingFactory", functio
         }
     };
     
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-    var context = new AudioContext(),
+    var context = storage.context,
         settings = {
           id: 'keyboard',
           width: 600,
@@ -42,7 +47,11 @@ app.controller("HomeCtrl", ["$scope", "instruments", "recordingFactory", functio
         },
         keyboard = new QwertyHancock(settings);
 
-    var gain = context.createGain();
+    var gain = storage.gain;
+
+    storage.addJunk("gain", gain);
+    storage.addJunk("context", context);
+    
     gain.gain.value = 0.3;
     gain.connect(context.destination);
     nodes = [];
@@ -68,9 +77,9 @@ app.controller("HomeCtrl", ["$scope", "instruments", "recordingFactory", functio
 
     function customOrNot (vco) {  
         if ($scope.radioModel === 'Waves') {
-            vco.type = $scope.waveType.toLowerCase() || 'sine';    
+            $scope.vco.type = $scope.waveType.toLowerCase() || 'sine';    
         } else if ($scope.radioModel === 'Custom' || $scope.radioModel === 'Instrument') {
-            vco.setPeriodicWave($scope.customWave);    
+            $scope.vco.setPeriodicWave($scope.customWave);    
         }
     }
       
@@ -79,17 +88,17 @@ app.controller("HomeCtrl", ["$scope", "instruments", "recordingFactory", functio
 
     keyboard.keyDown = function (note, frequency) {
         // console.log(frequency);
-        var vco = context.createOscillator();
+        $scope.vco = context.createOscillator();
         // var dest = context.createMediaStreamDestination();
-        // var mediaRecorder = new Recorder(dest.stream);
-        // osc.connect(dest);
-        customOrNot(vco);
-        vco.frequency.value = frequency;
-        vco.connect(gain);
-        vco.start(0);
+        // var recorder = new Recorder(dest.stream);
+        // $scope.vco.connect(dest);
+        customOrNot($scope.vco);
+        $scope.vco.frequency.value = frequency;
+        $scope.vco.connect(gain);
+        $scope.vco.start(0);
 
 
-        nodes.push(vco);
+        nodes.push($scope.vco);
         
     };
 
