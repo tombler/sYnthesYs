@@ -2,7 +2,7 @@
   "name": "",
   "version": "0.0.0",
   "description": "",
-  "main": "",
+  "main": "hello_http.js",
   "dependencies": {
     "grunt": "^0.4.5",
     "imagemin": "^3.2.0"
