@@ -7,18 +7,33 @@
       </div>
       <ul class="nav nav-tabs">
         <li role="presentation"><a href="#/home" ng-click="closeAudio()">Home</a></li>
-        <li role="presentation"><a href="#/custom">Load Your Own</a></li>
-        <!-- <li role="presentation"><a href="#">Messages</a></li> -->
+        <li role="presentation"><a href="#/custom">Drum Machine</a></li>
+        <li role="presentation"><a href="#/dj">DJ</a></li>
       </ul>
     </div>
 </nav>
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+          <ul class="draggable-objects">
+              <li ng-repeat="obj in buffersObject.slots" class="draggable">{{obj.name}}
+              </li>
+          </ul>
+        </div>
+    </div>
+</div>
+
 <div class="page-wrapper">
     <section id="sp">
-      <div id="pad1" data-sound="kick.wav"></div>
-      <div id="pad2" data-sound="snare.wav"></div>
-      <div id="pad3" data-sound="tin.wav"></div>
-      <div id="pad4" data-sound="hat.wav"></div>
+      <div id="pad1"></div>
+      <div id="pad2"></div>
+      <div id="pad3"></div>
+      <div id="pad4"></div>
+      <div id="pad5"></div>
+      <div id="pad6"></div>
+      <div id="pad7"></div>
+      <div id="pad8"></div>
     </section>
     <section>
         <!-- <form>
@@ -27,3 +42,12 @@
         </form> -->
     </section>
 </div>
+
+
+
+
+
+
+
+
+

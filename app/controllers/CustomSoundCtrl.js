@@ -16,14 +16,7 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
         responseType: 'arraybuffer'
     })
     .success(function (data) {
-        console.log(data);
-        // var parsedData = JSON.stringify(data);
-        // var ref = new Firebase('https://synthesys.firebaseio.com/samples');
-        // $scope.samples = $firebaseArray(ref);
-        // $scope.samples.$add({"song": parsedData})
-        //     .then(function (buffer) {
-        //         console.log("Added", parsedData);
-        //     });
+        // console.log(data);
         context.decodeAudioData(data, function (buffer) {
             $scope.bufferPad1 = buffer;
             // console.log(buffer);
@@ -67,8 +60,94 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
         });
     });
 
+    $http({
+        url: 'sounds/flam_Fltom.wav',
+        method: 'GET',
+        responseType: 'arraybuffer'
+    })
+    .success(function (data) {
+        // console.log(data);
+        context.decodeAudioData(data, function (buffer) {
+            $scope.bufferPad5 = buffer;
+        });
+    });
+
+    $http({
+        url: 'sounds/trap_kick.wav',
+        method: 'GET',
+        responseType: 'arraybuffer'
+    })
+    .success(function (data) {
+        // console.log(data);
+        context.decodeAudioData(data, function (buffer) {
+            $scope.bufferPad6 = buffer;
+        });
+    });
+
+    $http({
+        url: 'sounds/electronicHH.wav',
+        method: 'GET',
+        responseType: 'arraybuffer'
+    })
+    .success(function (data) {
+        // console.log(data);
+        context.decodeAudioData(data, function (buffer) {
+            $scope.bufferPad7 = buffer;
+        });
+    });
+
+    $http({
+        url: 'sounds/hi-hat-open.wav',
+        method: 'GET',
+        responseType: 'arraybuffer'
+    })
+    .success(function (data) {
+        // console.log(data);
+        context.decodeAudioData(data, function (buffer) {
+            $scope.bufferPad8 = buffer;
+        });
+    });    
 
 
+
+    // 8 buffers, 8 slots
+
+    $scope.buffersObject = {
+        slots: [
+            {
+                buffer: $scope.bufferPad1,
+                name: "Bass drum"
+            },
+            {
+                buffer: $scope.bufferPad2,
+                name: "Piccolo snare"
+            },
+            {
+                buffer: $scope.bufferPad3,
+                name: "Closed hi hat"
+            },
+            {
+                buffer: $scope.bufferPad4,
+                name: "Crash cymbal"
+            },
+            {
+                buffer: $scope.bufferPad5,
+                name: "Floor tom"
+            },
+            {
+                buffer: $scope.bufferPad6,
+                name: "Trap kick"
+            },
+            {
+                buffer: $scope.bufferPad7,
+                name: "Electronic hi hat"
+            },
+            {
+                buffer: $scope.bufferPad8,
+                name: "Open hi hat"
+            }
+        ]
+    };
     
 
 
@@ -91,13 +170,28 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
             playSound($scope.bufferPad4);
             $('#pad4').css('background-color', 'black');
         }
+        if (event.which == 88) {
+            playSound($scope.bufferPad5);
+            $('#pad5').css('background-color', 'black');
+        }
+        if (event.which == 67) {
+            playSound($scope.bufferPad6);
+            $('#pad6').css('background-color', 'black');
+        }
+        if (event.which == 78) {
+            playSound($scope.bufferPad7);
+            $('#pad7').css('background-color', 'black');
+        }
+        if (event.which == 77) {
+            playSound($scope.bufferPad8);
+            $('#pad8').css('background-color', 'black');
+        }
+
     });
 
     $document.keyup(function (event) {
         // console.log(event);
-        // Plays hi hat on "s" or "d" keypress
         if (event.which == 68) {
-            
             $('#pad1').css('background-color', 'green');
         }
         if (event.which == 70 || event.which == 83) {
@@ -109,6 +203,18 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
         if (event.which == 75) {
             $('#pad4').css('background-color', 'green');
         }
+        if (event.which == 88) {
+            $('#pad5').css('background-color', 'green');
+        }
+        if (event.which == 67) {
+            $('#pad6').css('background-color', 'green');
+        }
+        if (event.which == 78) {
+            $('#pad7').css('background-color', 'green');
+        }
+        if (event.which == 77) {
+            $('#pad8').css('background-color', 'green');
+        }
     });
 
     function playSound(buffer) {
@@ -119,7 +225,13 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
     }
 
     
+    $scope.testDrag = function ($data, $event) {
+        console.log($data, $event);
+    };
 
+    $scope.onDropComplete = function ($data, $event) {
+        console.log($data, $event);
+    };
 
 
 

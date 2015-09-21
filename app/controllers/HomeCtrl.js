@@ -10,7 +10,8 @@ app.controller("HomeCtrl", ["$scope", "instruments", "recordingFactory", "storag
     $scope.showTable = false;
     // recordingFactory();
     // console.log(Recorder);
-    $(document).unbind('keypress');
+    $(document).unbind('keydown');
+    $(document).unbind('keyup');
 
     $scope.closeAudio = function () {
         gain.disconnect(context.destination);

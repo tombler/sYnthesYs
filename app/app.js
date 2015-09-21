@@ -1,4 +1,4 @@
-var app = angular.module("sYnthesYs", ['ngRoute', 'firebase', 'ui.bootstrap']);
+var app = angular.module("sYnthesYs", ['ngRoute', 'firebase', 'ui.bootstrap', 'ngDraggable']);
 
 app
 
@@ -35,6 +35,11 @@ app
         when('/custom', {
             templateUrl: './app/templates/customSound.html',
             controller: 'CustomSoundCtrl'
+            
+        }).
+        when('/dj', {
+            templateUrl: './app/templates/dj.html',
+            controller: 'DjCtrl'
             
         }).
         otherwise({
