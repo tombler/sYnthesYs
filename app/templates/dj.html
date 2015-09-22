@@ -6,7 +6,7 @@
         </a>
       </div>
       <ul class="nav nav-tabs">
-        <li role="presentation"><a href="#/home">Home</a></li>
+        <li role="presentation"><a href="#/home" ng-click="closeAudio()">Home</a></li>
         <li role="presentation"><a href="#/custom" ng-click="closeAudio()">Drum Machine</a></li>
         <li role="presentation"><a href="#/dj">DJ</a></li>
       </ul>
@@ -15,20 +15,17 @@
 
 
 <div class="page-wrapper-dj" class="clearfix">
-  <canvas id="synth-pad" ng-mousemove="addEffects($event)" ng-mouseup="removeEffects($event)" ng-mouseout="removeEffects($event)"></canvas>
-  <canvas id="visual"></canvas>
+  <canvas id="filter" ng-mousedown="connectEffectGain()" ng-mousemove="addEffects($event)" ng-mouseup="removeEffects($event)" ng-mouseout="removeEffects($event)"></canvas>
+  <canvas id="delay" ng-mousedown="connectDelayGain()" ng-mousemove="addDelay($event)" ng-mouseup="removeDelay($event)" ng-mouseout="removeDelay($event)"></canvas>
   <div id="info">
     <h1>DJ Your Song</h1>
+    <audio controls>  
+      <!-- <source src="sounds/needYourHeart.mp3" type="audio/mp3"> -->
+    </audio>
     <p>
       Click and drag the mouse over the synthesizer pad to generate effects while your song is playing.
     </p>
     <button ng-click="playSong()">Play</button>
     <button ng-click="pauseSong()">Pause</button>
-    <p>
-      Frequency: <span id="frequency" ng-model="frequencyDisplay"></span>
-    </p>
-    <p>
-      Volume: <span id="volume">n/a</span>
-    </p>
   </div>
 </div>

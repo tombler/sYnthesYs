@@ -13,13 +13,25 @@
     </div>
 </nav>
 
-<div class="container">
+<!-- <div class="container">
     <div class="row">
         <div class="col-md-12">
           <ul class="draggable-objects">
               <li ng-repeat="obj in buffersObject.slots" class="draggable">{{obj.name}}
               </li>
           </ul>
+        </div>
+    </div>
+</div> -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+          <section>
+              <button ng-click="playMetronome()">Play Metronome</button>
+              <button ng-click="pauseMetronome()">Pause Metronome</button>
+          </section>
+          
         </div>
     </div>
 </div>
@@ -35,12 +47,7 @@
       <div id="pad7"></div>
       <div id="pad8"></div>
     </section>
-    <section>
-        <!-- <form>
-            <input type="file"/>
-            <button ng-click="test(sample)">Upload</button>
-        </form> -->
-    </section>
+    
 </div>
 
 
