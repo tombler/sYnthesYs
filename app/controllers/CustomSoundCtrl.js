@@ -1,17 +1,15 @@
-app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$firebaseArray", "$interval", function ($scope, storage, $document, $http, $firebaseArray, $interval) {
-
-    
-    // $(".input-id").fileinput();
+app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$firebaseArray", "$interval", "$window", function ($scope, storage, $document, $http, $firebaseArray, $interval, $window) {
     
     var context = storage.context;
     var buffer;
+    var elId;
 
     // Run each $http call to get 4 separate files.
     // Store each buffer result as separate variable
     // add buffer argument to playSound function
-    // Construct if statement in keypress event handler and pass diff buffers to playSound
+    
     $http({
-        url: 'sounds/click.wav',
+        url: 'sounds/120bpm.mp3',
         method: 'GET',
         responseType: 'arraybuffer'
     })
@@ -25,7 +23,7 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
     });
 
     $http({
-        url: 'sounds/stab-kik.wav',
+        url: 'sounds/909BD.wav',
         method: 'GET',
         responseType: 'arraybuffer'
     })
@@ -39,7 +37,7 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
     });
 
     $http({
-        url: 'sounds/piccolo-snare.wav',
+        url: 'sounds/909clap.wav',
         method: 'GET',
         responseType: 'arraybuffer'
     })
@@ -51,7 +49,7 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
     });
 
     $http({
-        url: 'sounds/hi-hat-closed.wav',
+        url: 'sounds/HT10.WAV',
         method: 'GET',
         responseType: 'arraybuffer'
     })
@@ -87,7 +85,7 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
     });
 
     $http({
-        url: 'sounds/trap_kick.wav',
+        url: 'sounds/crash choke.wav',
         method: 'GET',
         responseType: 'arraybuffer'
     })
@@ -164,156 +162,99 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
     };
     
     var loop;
-    var metronome;
+    $scope.isDisabled = false;
 
-    $scope.playMetronome = function () {
-        // metronome = $interval(function () {playSound($scope.metronome);}, 500);
+    $scope.playMetronome = function ($event) {
+        $scope.isDisabled = true;
         $scope.metSource = context.createBufferSource();
         $scope.metSource.buffer = $scope.metronome;
-        $scope.metLoop = context.createDelay(0.5);
-        $scope.metLoop.delayTime.value = 0.5;
-        $scope.metSource.connect($scope.metLoop);
-        $scope.metLoop.connect($scope.metLoop);
-        $scope.metLoop.connect(context.destination);
+        // $scope.metLoop = context.createDelay(0.5);
+        // $scope.metLoop.delayTime.value = 0.5;
+        // $scope.metSource.connect($scope.metLoop);
+        // $scope.metLoop.connect($scope.metLoop);
+        // $scope.metLoop.connect(context.destination);
+        $scope.metSource.connect(context.destination);
         $scope.metSource.start();
         // playMetronome();
     };
 
-    $scope.pauseMetronome = function () {
-        $scope.metLoop.disconnect(context.destination);
+    $scope.pauseMetronome = function ($event) {
+        $scope.isDisabled = false;
+        $scope.metSource.disconnect(context.destination);
         $scope.metSource.stop();
     };
 
-    
+    // Construct if statement in keypress event handler and pass diff buffers to playSound
     $document.keydown(function (event) {
-        // console.log(event);
-        // Plays hi hat on "s" or "d" keypress
         if (event.which == 68) {
-            playSound($scope.bufferPad1);
-            // loop = $interval(function () {playSound($scope.bufferPad1);}, 2000);
-            $('#pad1').css('background-color', 'black');
+            elId = '#pad1';
+            playSound($scope.bufferPad1, context.currentTime, elId);
         }
         if (event.which == 70 || event.which == 83) {
-            playSound($scope.bufferPad2);
-            $('#pad2').css('background-color', 'black');
+            elId = '#pad2';
+            playSound($scope.bufferPad2, context.currentTime, elId);
         }
         if (event.which == 74) {
-            playSound($scope.bufferPad3);
-            $('#pad3').css('background-color', 'black');
+            elId = '#pad3';
+            playSound($scope.bufferPad3, context.currentTime, elId);
         }
         if (event.which == 75) {
-            playSound($scope.bufferPad4);
-            $('#pad4').css('background-color', 'black');
+            elId = '#pad4';
+            playSound($scope.bufferPad4, context.currentTime, elId);
         }
         if (event.which == 88) {
-            playSound($scope.bufferPad5);
-            $('#pad5').css('background-color', 'black');
+            elId = '#pad5';
+            playSound($scope.bufferPad5, context.currentTime, elId);
         }
         if (event.which == 67) {
-            playSound($scope.bufferPad6);
-            $('#pad6').css('background-color', 'black');
+            elId = '#pad6';
+            playSound($scope.bufferPad6, context.currentTime, elId);
         }
         if (event.which == 78) {
-            playSound($scope.bufferPad7);
-            $('#pad7').css('background-color', 'black');
+            elId = '#pad7';
+            playSound($scope.bufferPad7, context.currentTime, elId);
         }
         if (event.which == 77) {
-            playSound($scope.bufferPad8);
-            $('#pad8').css('background-color', 'black');
+            elId = '#pad8';
+            playSound($scope.bufferPad8, context.currentTime, elId);
         }
-
     });
 
     $document.keyup(function (event) {
         // console.log(event);
-        if (event.which == 68) {
-            // Run stopSound ($scope.source.stop())
-            // stopSound();
-            $('#pad1').css('background-color', 'green');
-        }
-        if (event.which == 70 || event.which == 83) {
-            // stopSound();
-            $('#pad2').css('background-color', 'green');   
-        }
-        if (event.which == 74) {
-            // stopSound();
-            $('#pad3').css('background-color', 'green');
-        }
-        if (event.which == 75) {
-            // stopSound();
-            $('#pad4').css('background-color', 'green');
-        }
-        if (event.which == 88) {
-            // stopSound();
-            $('#pad5').css('background-color', 'green');
-        }
-        if (event.which == 67) {
-            // stopSound();
-            $('#pad6').css('background-color', 'green');
-        }
-        if (event.which == 78) {
-            // stopSound();
-            $('#pad7').css('background-color', 'green');
-        }
-        if (event.which == 77) {
-            // stopSound();
-            $('#pad8').css('background-color', 'green');
-        }
+        $('#sp div').css('background-color', 'green');
     });
 
+    $scope.breakLoop = false;
 
-    // function playMetronome() {
-    //     $scope.metSource = context.createBufferSource();
-    //     $scope.metSource.buffer = $scope.metronome;
-    //     $scope.metLoop = context.createDelay(0.5);
-    //     $scope.metLoop.delayTime.value = 0.5;
-    //     $scope.metSource.connect($scope.metLoop);
-    //     $scope.metLoop.connect($scope.metLoop);
-    //     $scope.metLoop.connect(context.destination);
-    //     $scope.metSource.start();
-    // }
-
-
-// In order to fix bug of notes stopping play: write function that creates new variable for source and loop each time a key is pressed.
-    function playSound(buffer) {
-      $scope.source = context.createBufferSource();
-      $scope.source.buffer = buffer;
-      // $scope.delayGain = context.createGain();
-      // $scope.delayGain.gain.value = 0;
-      $scope.loop = context.createDelay(2.0);
-      $scope.loop.delayTime.value = 2.0;
-
-      $scope.source.connect($scope.loop);
-      $scope.loop.connect($scope.loop);
-      $scope.loop.connect(context.destination);
-
-      // $scope.source.connect($scope.delayGain);
-      // $scope.delayGain.connect($scope.loop);
-      // $scope.loop.connect($scope.loop);
-      // $scope.loop.connect(context.destination);
-      // delayGain.connect(context.destination);
-      $scope.source.connect(context.destination);
-      var quant = (Math.floor(context.currentTime / 0.5)) * 0.5;
-      $scope.source.start(quant);
-
-
+    function playSound(buffer, t, elId) {
+        for (t; t < 100; t += 2) {     
+          $(elId).css('background-color', 'black');
+          $scope.changePadColor = $interval(function () {
+            // Runs interval function to change pad color only if loop is not broken.
+            if (!$scope.breakLoop) {
+                $(elId).css('background-color', 'black');
+            }
+          }, 2000);
+          $scope.returnPadColor = $interval(function () {
+            // Runs interval function to return pad color only if loop is not broken.
+            if (!$scope.breakLoop) {
+                $(elId).css('background-color', 'green');
+            }
+          }, 2010);
+          $scope.source = context.createBufferSource();
+          $scope.source.buffer = buffer;
+          $scope.source.connect(context.destination);
+          $scope.source.start(t);
+        }
     }
 
-    function stopSound() {
-        $scope.source.disconnect(context.destination);
-        $scope.source.stop();
-    }
-    
-
-    // Start metronome at static tempo 120 bpm through <audio loop=true>
-
-    // Create 4 second loop (2 measures)
+    $scope.reset = function () {
+        $window.location.reload();
+    };
 
 
     
-    // On each strike: run playSound() AND loopedSound()
-        // loopedSound: create a delay that runs every 4 seconds, feedback on infinite.
-
 
 
 

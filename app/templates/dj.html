@@ -19,9 +19,17 @@
   <canvas id="delay" ng-mousedown="connectDelayGain()" ng-mousemove="addDelay($event)" ng-mouseup="removeDelay($event)" ng-mouseout="removeDelay($event)"></canvas>
   <div id="info">
     <h1>DJ Your Song</h1>
-    <audio controls>  
-      <!-- <source src="sounds/needYourHeart.mp3" type="audio/mp3"> -->
-    </audio>
+    <!-- Playback Rate slider -->
+    <div class="progress-box" ng-app>
+      <div class="percentage-cur" ng-init="selectedRange=100">
+        <span class="num">{{ selectedRange }}</span>
+      </div>
+      <div class="progress-bar progress-bar-slider">
+        <input class="progress-slider" type="range" min="50" max="200" ng-model="selectedRange" ng-change="changePlaybackRate(selectedRange)">
+        <div class="inner" ng-style="{ width: selectedRangePercent || '33.3%' }"></div>
+      </div>
+    </div>
+
     <p>
       Click and drag the mouse over the synthesizer pad to generate effects while your song is playing.
     </p>

@@ -114,7 +114,7 @@ app.controller("DjCtrl", ["$scope", "instruments", "recordingFactory", "storage"
             // console.log("yes")
             $scope.effectGainNode.disconnect(context.destination);
             $scope.delayEffect.delayTime.value = $event.offsetY * 0.006633;
-            $scope.effectGainNode.gain.value = 0.5;
+            $scope.effectGainNode.gain.value = 0.8;
             $scope.masterGain.gain.value = 0.5;
 
             $scope.effectSource.connect($scope.delayEffect);
@@ -129,13 +129,21 @@ app.controller("DjCtrl", ["$scope", "instruments", "recordingFactory", "storage"
         $scope.masterGain.gain.value = 1;
     };
 
+    $scope.changePlaybackRate = function (selectedRange) {
+        // console.log(selectedRange);
+        $scope.selectedRangePercent = ((parseInt(selectedRange) - 50) / 1.5) + "%";
+        var calculatedPBV = selectedRange / 100;
+        $scope.source.playbackRate.value = calculatedPBV;
+        // Change effect source playback value:
+        $scope.effectSource.playbackRate.value = calculatedPBV;
+
+    };
+
+
+
     $scope.closeAudio = function () {
         $scope.masterGain.disconnect(context.destination);
     };
-    // Timing effects!!
-    // See https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Using_Web_Audio_API
-  
-
 
 }]);
 
