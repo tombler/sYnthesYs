@@ -1,262 +1,117 @@
-app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$firebaseArray", "$interval", "$window", function ($scope, storage, $document, $http, $firebaseArray, $interval, $window) {
+app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$firebaseArray", "$interval", "$window", "audioSampleLoader", function ($scope, storage, $document, $http, $firebaseArray, $interval, $window, audioSampleLoader) {
     
+    // Set up variables
     var context = storage.context;
-    var buffer;
     var elId;
-
-    // Run each $http call to get 4 separate files.
-    // Store each buffer result as separate variable
-    // add buffer argument to playSound function
-    
-    $http({
-        url: 'sounds/120bpm.mp3',
-        method: 'GET',
-        responseType: 'arraybuffer'
-    })
-    .success(function (data) {
-        // console.log(data);
-        context.decodeAudioData(data, function (buffer) {
-            $scope.metronome = buffer;
-            // console.log(buffer);
-            
-        });
-    });
-
-    $http({
-        url: 'sounds/909BD.wav',
-        method: 'GET',
-        responseType: 'arraybuffer'
-    })
-    .success(function (data) {
-        // console.log(data);
-        context.decodeAudioData(data, function (buffer) {
-            $scope.bufferPad1 = buffer;
-            // console.log(buffer);
-            
-        });
-    });
-
-    $http({
-        url: 'sounds/909clap.wav',
-        method: 'GET',
-        responseType: 'arraybuffer'
-    })
-    .success(function (data) {
-        // console.log(data);
-        context.decodeAudioData(data, function (buffer) {
-            $scope.bufferPad2 = buffer;
-        });
-    });
-
-    $http({
-        url: 'sounds/HT10.WAV',
-        method: 'GET',
-        responseType: 'arraybuffer'
-    })
-    .success(function (data) {
-        // console.log(data);
-        context.decodeAudioData(data, function (buffer) {
-            $scope.bufferPad3 = buffer;
-        });
-    });
-
-    $http({
-        url: 'sounds/crash cymbal.wav',
-        method: 'GET',
-        responseType: 'arraybuffer'
-    })
-    .success(function (data) {
-        // console.log(data);
-        context.decodeAudioData(data, function (buffer) {
-            $scope.bufferPad4 = buffer;
-        });
-    });
-
-    $http({
-        url: 'sounds/flam_Fltom.wav',
-        method: 'GET',
-        responseType: 'arraybuffer'
-    })
-    .success(function (data) {
-        // console.log(data);
-        context.decodeAudioData(data, function (buffer) {
-            $scope.bufferPad5 = buffer;
-        });
-    });
-
-    $http({
-        url: 'sounds/crash choke.wav',
-        method: 'GET',
-        responseType: 'arraybuffer'
-    })
-    .success(function (data) {
-        // console.log(data);
-        context.decodeAudioData(data, function (buffer) {
-            $scope.bufferPad6 = buffer;
-        });
-    });
-
-    $http({
-        url: 'sounds/electronicHH.wav',
-        method: 'GET',
-        responseType: 'arraybuffer'
-    })
-    .success(function (data) {
-        // console.log(data);
-        context.decodeAudioData(data, function (buffer) {
-            $scope.bufferPad7 = buffer;
-        });
-    });
-
-    $http({
-        url: 'sounds/hi-hat-open.wav',
-        method: 'GET',
-        responseType: 'arraybuffer'
-    })
-    .success(function (data) {
-        // console.log(data);
-        context.decodeAudioData(data, function (buffer) {
-            $scope.bufferPad8 = buffer;
-        });
-    });    
-
-
-
-    // 8 buffers, 8 slots
-
-    $scope.buffersObject = {
-        slots: [
-            {
-                buffer: $scope.bufferPad1,
-                name: "Bass drum"
-            },
-            {
-                buffer: $scope.bufferPad2,
-                name: "Piccolo snare"
-            },
-            {
-                buffer: $scope.bufferPad3,
-                name: "Closed hi hat"
-            },
-            {
-                buffer: $scope.bufferPad4,
-                name: "Crash cymbal"
-            },
-            {
-                buffer: $scope.bufferPad5,
-                name: "Floor tom"
-            },
-            {
-                buffer: $scope.bufferPad6,
-                name: "Trap kick"
-            },
-            {
-                buffer: $scope.bufferPad7,
-                name: "Electronic hi hat"
-            },
-            {
-                buffer: $scope.bufferPad8,
-                name: "Open hi hat"
-            }
-        ]
-    };
-    
-    var loop;
+    $scope.bufferPads = [];
     $scope.isDisabled = false;
+    $scope.breakLoop = false;
 
+// ******************** LOAD ALL SAMPLES FOR THE PAGE ********************//
+    var loader = new audioSampleLoader();
+    loader.src = ['sounds/120bpm.mp3', 'sounds/909BD.wav', 'sounds/909clap.wav', 'sounds/HT10.WAV', 'sounds/crash cymbal.wav', 'sounds/flam_Fltom.wav', 'sounds/crash choke.wav', 'sounds/electronicHH.wav', 'sounds/hi-hat-open.wav'];
+    loader.ctx = context;
+    loader.onload = function () { 
+        for (var i = 0; i < loader.response.length; i++) {
+            $scope.bufferPads.push(loader.response[i]);
+        }
+    };
+    loader.onerror = function () { 
+        alert('Awwwwww snap!');
+    };
+    loader.send();
+
+// ************************METRONOME FUNCTIONS ****************************//
     $scope.playMetronome = function ($event) {
+        // Disable Play button
         $scope.isDisabled = true;
         $scope.metSource = context.createBufferSource();
-        $scope.metSource.buffer = $scope.metronome;
-        // $scope.metLoop = context.createDelay(0.5);
-        // $scope.metLoop.delayTime.value = 0.5;
-        // $scope.metSource.connect($scope.metLoop);
-        // $scope.metLoop.connect($scope.metLoop);
-        // $scope.metLoop.connect(context.destination);
+        $scope.metSource.buffer = $scope.bufferPads[0];
         $scope.metSource.connect(context.destination);
         $scope.metSource.start();
-        // playMetronome();
     };
 
     $scope.pauseMetronome = function ($event) {
+        // Enable play button
         $scope.isDisabled = false;
         $scope.metSource.disconnect(context.destination);
         $scope.metSource.stop();
     };
 
-    // Construct if statement in keypress event handler and pass diff buffers to playSound
+
+// ************************ KEYPRESS EVENTS ********************************//
+    // Keypress events: for each keydown event, play associated sample.
     $document.keydown(function (event) {
         if (event.which == 68) {
             elId = '#pad1';
-            playSound($scope.bufferPad1, context.currentTime, elId);
+            playSound($scope.bufferPads[1], context.currentTime, elId);
         }
         if (event.which == 70 || event.which == 83) {
             elId = '#pad2';
-            playSound($scope.bufferPad2, context.currentTime, elId);
+            playSound($scope.bufferPads[2], context.currentTime, elId);
         }
         if (event.which == 74) {
             elId = '#pad3';
-            playSound($scope.bufferPad3, context.currentTime, elId);
+            playSound($scope.bufferPads[3], context.currentTime, elId);
         }
         if (event.which == 75) {
             elId = '#pad4';
-            playSound($scope.bufferPad4, context.currentTime, elId);
+            playSound($scope.bufferPads[4], context.currentTime, elId);
         }
         if (event.which == 88) {
             elId = '#pad5';
-            playSound($scope.bufferPad5, context.currentTime, elId);
+            playSound($scope.bufferPads[5], context.currentTime, elId);
         }
         if (event.which == 67) {
             elId = '#pad6';
-            playSound($scope.bufferPad6, context.currentTime, elId);
+            playSound($scope.bufferPads[6], context.currentTime, elId);
         }
         if (event.which == 78) {
             elId = '#pad7';
-            playSound($scope.bufferPad7, context.currentTime, elId);
+            playSound($scope.bufferPads[7], context.currentTime, elId);
         }
         if (event.which == 77) {
             elId = '#pad8';
-            playSound($scope.bufferPad8, context.currentTime, elId);
+            playSound($scope.bufferPads[8], context.currentTime, elId);
         }
     });
 
+    // On keyup, returns pads to original color.
     $document.keyup(function (event) {
         // console.log(event);
         $('#sp div').css('background-color', 'green');
     });
 
-    $scope.breakLoop = false;
+    <img src='imgURL.com'>
 
+
+// ************************ LOOPING SAMPLES ****************************//
     function playSound(buffer, t, elId) {
-        for (t; t < 100; t += 2) {     
-          $(elId).css('background-color', 'black');
-          $scope.changePadColor = $interval(function () {
-            // Runs interval function to change pad color only if loop is not broken.
-            if (!$scope.breakLoop) {
-                $(elId).css('background-color', 'black');
-            }
-          }, 2000);
-          $scope.returnPadColor = $interval(function () {
-            // Runs interval function to return pad color only if loop is not broken.
-            if (!$scope.breakLoop) {
-                $(elId).css('background-color', 'green');
-            }
-          }, 2010);
-          $scope.source = context.createBufferSource();
-          $scope.source.buffer = buffer;
-          $scope.source.connect(context.destination);
-          $scope.source.start(t);
+        // This is a temporary fix.
+        // t = the time since the user has loaded the page. While that time is < 500 sec, the loop will run every 2 sec.
+        // t += ___ corresponds to time in seconds for one measure.
+        for (t; t < 500; t += 2) {
+            // Changes background color for initial hit.     
+            $(elId).css('background-color', 'black');
+            // Runs interval function to change pad color every measure only if loop is not broken.  
+            $scope.changePadColor = $interval(function () {
+                if (!$scope.breakLoop) {$(elId).css('background-color', 'black');}
+            }, 2000);
+            // Runs interval function to return pad color every measure only if loop is not broken.
+            $scope.returnPadColor = $interval(function () {
+                if (!$scope.breakLoop) {$(elId).css('background-color', 'green');}
+            }, 2010);
+            // Get sample buffer from argument of function and start loop.
+            $scope.source = context.createBufferSource();
+            $scope.source.buffer = buffer;
+            $scope.source.connect(context.destination);
+            $scope.source.start(t);
         }
     }
 
+    // Refreshes page to reset loop. Unable to break out of for loop ^^^, this is temporary solution.
     $scope.reset = function () {
         $window.location.reload();
     };
-
-
-    
-
-
-
 
 }]);

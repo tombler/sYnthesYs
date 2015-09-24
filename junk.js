@@ -348,3 +348,174 @@
         }
 
     };
+
+
+
+    // 8 buffers, 8 slots
+
+    $scope.buffersObject = {
+        slots: [
+            {
+                buffer: $scope.bufferPad1,
+                name: "Bass drum"
+            },
+            {
+                buffer: $scope.bufferPad2,
+                name: "Piccolo snare"
+            },
+            {
+                buffer: $scope.bufferPad3,
+                name: "Closed hi hat"
+            },
+            {
+                buffer: $scope.bufferPad4,
+                name: "Crash cymbal"
+            },
+            {
+                buffer: $scope.bufferPad5,
+                name: "Floor tom"
+            },
+            {
+                buffer: $scope.bufferPad6,
+                name: "Trap kick"
+            },
+            {
+                buffer: $scope.bufferPad7,
+                name: "Electronic hi hat"
+            },
+            {
+                buffer: $scope.bufferPad8,
+                name: "Open hi hat"
+            }
+        ]
+    };
+
+
+// Run each $http call to get 4 separate files.
+    // Store each buffer result as separate variable
+    // add buffer argument to playSound function
+    
+    // $http({
+    //     url: 'sounds/120bpm.mp3',
+    //     method: 'GET',
+    //     responseType: 'arraybuffer'
+    // })
+    // .success(function (data) {
+    //     // console.log(data);
+    //     context.decodeAudioData(data, function (buffer) {
+    //         $scope.metronome = buffer;
+    //         // console.log(buffer);
+            
+    //     });
+    // });
+
+    // $http({
+    //     url: 'sounds/909BD.wav',
+    //     method: 'GET',
+    //     responseType: 'arraybuffer'
+    // })
+    // .success(function (data) {
+    //     // console.log(data);
+    //     context.decodeAudioData(data, function (buffer) {
+    //         $scope.bufferPad1 = buffer;
+    //         // console.log(buffer);
+            
+    //     });
+    // });
+
+    // $http({
+    //     url: 'sounds/909clap.wav',
+    //     method: 'GET',
+    //     responseType: 'arraybuffer'
+    // })
+    // .success(function (data) {
+    //     // console.log(data);
+    //     context.decodeAudioData(data, function (buffer) {
+    //         $scope.bufferPad2 = buffer;
+    //     });
+    // });
+
+    // $http({
+    //     url: 'sounds/HT10.WAV',
+    //     method: 'GET',
+    //     responseType: 'arraybuffer'
+    // })
+    // .success(function (data) {
+    //     // console.log(data);
+    //     context.decodeAudioData(data, function (buffer) {
+    //         $scope.bufferPad3 = buffer;
+    //     });
+    // });
+
+    // $http({
+    //     url: 'sounds/crash cymbal.wav',
+    //     method: 'GET',
+    //     responseType: 'arraybuffer'
+    // })
+    // .success(function (data) {
+    //     // console.log(data);
+    //     context.decodeAudioData(data, function (buffer) {
+    //         $scope.bufferPad4 = buffer;
+    //     });
+    // });
+
+    // $http({
+    //     url: 'sounds/flam_Fltom.wav',
+    //     method: 'GET',
+    //     responseType: 'arraybuffer'
+    // })
+    // .success(function (data) {
+    //     // console.log(data);
+    //     context.decodeAudioData(data, function (buffer) {
+    //         $scope.bufferPad5 = buffer;
+    //     });
+    // });
+
+    // $http({
+    //     url: 'sounds/crash choke.wav',
+    //     method: 'GET',
+    //     responseType: 'arraybuffer'
+    // })
+    // .success(function (data) {
+    //     // console.log(data);
+    //     context.decodeAudioData(data, function (buffer) {
+    //         $scope.bufferPad6 = buffer;
+    //     });
+    // });
+
+    // $http({
+    //     url: 'sounds/electronicHH.wav',
+    //     method: 'GET',
+    //     responseType: 'arraybuffer'
+    // })
+    // .success(function (data) {
+    //     // console.log(data);
+    //     context.decodeAudioData(data, function (buffer) {
+    //         $scope.bufferPad7 = buffer;
+    //     });
+    // });
+
+    // $http({
+    //     url: 'sounds/hi-hat-open.wav',
+    //     method: 'GET',
+    //     responseType: 'arraybuffer'
+    // })
+    // .success(function (data) {
+    //     // console.log(data);
+    //     context.decodeAudioData(data, function (buffer) {
+    //         $scope.bufferPad8 = buffer;
+    //     });
+    // });    
+
+
+
+
+    // $scope.metLoop = context.createDelay(0.5);
+        // $scope.metLoop.delayTime.value = 0.5;
+        // $scope.metSource.connect($scope.metLoop);
+        // $scope.metLoop.connect($scope.metLoop);
+        // $scope.metLoop.connect(context.destination);
+
+
+
+        // playMetronome();

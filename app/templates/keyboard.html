@@ -1,0 +1,137 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#/home">
+          sYnthesYs
+        </a>
+      </div>
+      <ul class="nav nav-tabs">
+        <li role="presentation"><a href="#/keyboard"><img src="img/keyboard-icon.jpg"></a></li>
+        <li role="presentation"><a href="#/custom" ng-click="closeAudio()"><img src="img/drumsticks-icon.png"></a></li>
+        <li role="presentation"><a href="#/dj"><img src="img/DJ-icon.png"></a></li>
+      </ul>
+    </div>
+</nav>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-wrapper">
+                <div class="row">
+                    <div class="col-md-8">
+                        <table class="table table-condensed table-hover">
+                            <thead ng-click="toggleTable()">
+                              <tr>
+                                <th><a href="">Note-To-Keystroke Map</a></th>
+                              </tr>
+                            </thead>
+                            <tbody ng-show="showTable">
+                              <tr>
+                                <th>Note</th>
+                                <td>C</td>
+                                <td>C#</td>
+                                <td>D</td>
+                                <td>D#</td>
+                                <td>E</td>
+                                <td>F</td>
+                                <td>F#</td>
+                                <td>G</td>
+                                <td>G#</td>
+                                <td>A</td>
+                                <td>A#</td>
+                                <td>B</td>
+                                <td>C</td>
+                                <td>C#</td>
+                                <td>D</td>
+                                <td>D#</td>
+                                <td>E</td>
+                                <td>F</td>
+                                <td>F#</td>
+                                <td>G</td>
+                              </tr>
+                              <tr>
+                                <th>Key</th>
+                                <td>A</td>
+                                <td>W</td>
+                                <td>S</td>
+                                <td>E</td>
+                                <td>D</td>
+                                <td>F</td>
+                                <td>T</td>
+                                <td>G</td>
+                                <td>Y</td>
+                                <td>H</td>
+                                <td>U</td>
+                                <td>J</td>
+                                <td>K</td>
+                                <td>O</td>
+                                <td>L</td>
+                                <td>P</td>
+                                <td>;</td>
+                                <td>'</td>
+                                <td>]</td>
+                                <td>\</td>
+                              </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="exampleInputAmount">Choose Your Sound Wave</label>
+                        <div class="btn-group">
+                            <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Waves'">Oscillator</label>
+                            <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Instrument'">Instrument</label>
+                            <!-- <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Custom'">Custom</label> -->
+                        </div>
+                        <select class="form-control" ng-options="type for type in waveTypeList" ng-model="waveType" ng-show="radioModel === 'Waves'">
+                            <option value="">Choose Wave Shape</option>
+                        </select>
+                        <select class="form-control" ng-show="radioModel === 'Instrument'" ng-options="instrument for instrument in instruments.instrumentNames" ng-model="chosenInstrument" ng-change="chooseInstrument(chosenInstrument)">
+                            <option value="">Choose Your Instrument</option>
+                        </select>
+                        <!-- <form class="form" ng-show="radioModel === 'Custom'">
+                            <div class="form-group">
+                                <div class="input-group" ng-repeat="value in placeholderWaveValues">
+                                  <div class="input-group-addon"></div>
+                                  <input type="text" class="form-control customValuesInput" id="exampleInputAmount" ng-model="customWaveValues[$index]" placeholder="{{value.value}}" maxlength="2">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" ng-click="createWave(customWaveValues)">Create Wave</button>
+                        </form> -->
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="page-wrapper">
+                <div class="container">
+                    <div class="row row-centered">
+                        
+                        <div class="col-md-9 col-centered">
+                            <div id="keyboard"></div>
+                        </div>
+                        
+                
+                    </div>
+                    <!-- <div class="row">
+                        <h1>Recorder.js simple WAV export example</h1>
+
+                        <p>Make sure you are using a recent version of Google Chrome.</p>
+                        <p>Also before you enable microphone input either plug in headphones or turn the volume down if you want to avoid ear splitting feedback!</p>
+
+                        <button ng-click="startRecording($event)">record</button>
+                        <button ng-click="stopRecording($event)">stop</button>
+
+                        <h2>Recordings</h2>
+                        <ul id="recordingslist"></ul>
+
+                        <h2>Log</h2>
+                        <pre id="log"></pre>
+ 
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

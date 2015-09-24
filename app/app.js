@@ -30,6 +30,10 @@ app
         when('/home', {
             templateUrl: './app/templates/home.html',
             controller: 'HomeCtrl'
+        }).
+        when('/keyboard', {
+            templateUrl: './app/templates/keyboard.html',
+            controller: 'KeyboardCtrl'
             
         }).
         when('/custom', {
@@ -43,6 +47,6 @@ app
             
         }).
         otherwise({
-            redirectTo: '/home'
+            redirectTo: '/keyboard'
         });
 }]);

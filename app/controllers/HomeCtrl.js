@@ -1,126 +1,96 @@
-app.controller("HomeCtrl", ["$scope", "instruments", "recordingFactory", "storage", function ($scope, instruments, recordingFactory, storage) {
+app.controller("HomeCtrl", ["$scope", "$location" ,function ($scope, $location) {
 
-    $scope.waveType = "";
-    $scope.waveTypeList = ['Sine', 'Sawtooth', 'Triangle'];
-    $scope.placeholderWaveValues = [{value: "Enter a number 0-99"}, {value: "Enter a number 0-99"}, {value: "Enter a number 0-99"}, {value: "Enter a number 0-99"}, {value: "Enter a number 0-99"}];
-    $scope.customWaveValues = [];
-    $scope.radioModel = 'Waves';
-    $scope.instruments = instruments;
-    $scope.chosenInstrument = "";
-    $scope.showTable = false;
-    // recordingFactory();
-    // console.log(Recorder);
-    $(document).unbind('keydown');
-    $(document).unbind('keyup');
-
-    $scope.closeAudio = function () {
-        gain.disconnect(context.destination);
-        $scope.vco = null;
-    };
-
-
-    $scope.chooseInstrument = function (chosenInstrument) {
-        // console.log(chosenInstrument)
-        // console.log($scope.instruments[chosenInstrument]);
-        setCustomWave($scope.instruments[chosenInstrument]);
-    };
-
-    $scope.toggleTable = function () {
-        if ($scope.showTable === false) {
-            $scope.showTable = true;
-        } else {
-            $scope.showTable = false;
-        }
-    };
+    // ******************** BUBBLES *******************************//
+    // Taken from http://fiddle.jshell.net/DYN6U/
+    (function() {
+    var paper, circs, i, nowX, nowY, timer, props = {}, toggler = 0, elie, dx, dy, rad, cur, opa;
+    // Returns a random integer between min and max  
+    // Using Math.round() will give you a non-uniform distribution!  
+    function ran(min, max)  
+    {  
+        return Math.floor(Math.random() * (max - min + 1)) + min;  
+    } 
     
+    function moveIt()
+    {
+        for(i = 0; i < circs.length; ++i)
+        {            
+              // Reset when time is at zero
+            if (! circs[i].time) 
+            {
+                circs[i].time  = ran(30, 100);
+                circs[i].deg   = ran(-179, 180);
+                circs[i].vel   = ran(1, 5);  
+                circs[i].curve = ran(0, 1);
+                circs[i].fade  = ran(0, 1);
+                circs[i].grow  = ran(-2, 2); 
+            }                
+                // Get position
+            nowX = circs[i].attr("cx");
+            nowY = circs[i].attr("cy");   
+               // Calc movement
+            dx = circs[i].vel * Math.cos(circs[i].deg * Math.PI/180);
+            dy = circs[i].vel * Math.sin(circs[i].deg * Math.PI/180);
+                // Calc new position
+            nowX += dx;
+            nowY += dy;
+                // Calc wrap around
+            if (nowX < 0) nowX = 1200 + nowX;
+            else          nowX = nowX % 1200;            
+            if (nowY < 0) nowY = 1200 + nowY;
+            else          nowY = nowY % 1200;
+            
+                // Render moved particle
+            circs[i].attr({cx: nowX, cy: nowY});
+            
+                // Calc growth
+            rad = circs[i].attr("r");
+            if (circs[i].grow > 0) circs[i].attr("r", Math.min(30, rad +  .1));
+            else                   circs[i].attr("r", Math.max(10,  rad -  .1));
+            
+                // Calc curve
+            if (circs[i].curve > 0) circs[i].deg = circs[i].deg + 2;
+            else                    circs[i].deg = circs[i].deg - 2;
+            
+                // Calc opacity
+            opa = circs[i].attr("fill-opacity");
+            if (circs[i].fade > 0) {
+                circs[i].attr("fill-opacity", Math.max(.3, opa -  .01));
+                circs[i].attr("stroke-opacity", Math.max(.3, opa -  .01)); }
+            else {
+                circs[i].attr("fill-opacity", Math.min(1, opa +  .01));
+                circs[i].attr("stroke-opacity", Math.min(1, opa +  .01)); }
 
-    var context = storage.context,
-        settings = {
-          id: 'keyboard',
-          width: 600,
-          height: 150,
-          startNote: 'A2',
-          whiteNotesColour: '#fff',
-          blackNotesColour: '#000',
-          borderColour: '#000',
-          activeColour: 'yellow',
-          octaves: 2
-        },
-        keyboard = new QwertyHancock(settings);
-
-    var gain = storage.gain;
-
-    storage.addJunk("gain", gain);
-    storage.addJunk("context", context);
-    
-    gain.gain.value = 0.3;
-    gain.connect(context.destination);
-    nodes = [];
-
-    $scope.createWave = function (customWaveValues) {
-        // console.log(customWaveValues);
-        var finalCustomValues = [];
-        var stringToNumber = (customWaveValues.map(Number));
-        stringToNumber.map(function (value) {
-            value = value / 100;
-            finalCustomValues.push(value);
-        });
-        console.log(finalCustomValues);
-        setCustomWave(finalCustomValues);
-
-    };
-
-    function setCustomWave (values) {
-        var realArray = new Float32Array(values);
-        var imagArray = new Float32Array(realArray.length);
-        $scope.customWave = context.createPeriodicWave(realArray, imagArray);
+            // Progress timer for particle
+            circs[i].time = circs[i].time - 1;
+            
+                // Calc damping
+            if (circs[i].vel < 1) circs[i].time = 0;
+            else circs[i].vel = circs[i].vel - .05;              
+       
+        } 
+        timer = setTimeout(moveIt, 60);
     }
 
-    function customOrNot (vco) {  
-        if ($scope.radioModel === 'Waves') {
-            $scope.vco.type = $scope.waveType.toLowerCase() || 'sine';    
-        } else if ($scope.radioModel === 'Custom' || $scope.radioModel === 'Instrument') {
-            $scope.vco.setPeriodicWave($scope.customWave);    
+        paper = Raphael("canvas", 1275, 800);
+        // console.log("paper", paper);
+        circs = paper.set();
+        for (i = 0; i < 30; ++i)
+        {
+            opa = ran(3,10)/10;
+            circs.push(paper.circle(ran(0,800), ran(0,800), ran(10,30)).attr({"fill-opacity": opa,
+                                                                           "stroke-opacity": opa}));
         }
+        circs.attr({fill: "#00DDAA", stroke: "#00DDAA"});
+        moveIt();
+    }()); //End of bubbles function
+
+
+    $scope.goToKeyboard = function () {
+        $location.url('/keyboard');
     }
-      
-      
-    /* Connections */
-
-    keyboard.keyDown = function (note, frequency) {
-        // console.log(frequency);
-        $scope.vco = context.createOscillator();
-        // var dest = context.createMediaStreamDestination();
-        // var recorder = new Recorder(dest.stream);
-        // $scope.vco.connect(dest);
-        customOrNot($scope.vco);
-        $scope.vco.frequency.value = frequency;
-        $scope.vco.connect(gain);
-        $scope.vco.start(0);
 
 
-        nodes.push($scope.vco);
-        
-    };
 
-    keyboard.keyUp = function (note, frequency) {
 
-        var new_nodes = [];
-
-        for (var i = 0; i < nodes.length; i++) {
-          if (Math.round(nodes[i].frequency.value) === Math.round(frequency)) {
-            nodes[i].stop(0); // Stops that node from playing at the current moment, i.e. in 0 seconds.
-            nodes[i].disconnect(); // Presumably disconnects from destination? Actual code is maybe gain.disconnect(context.destination)?
-          } else {
-            new_nodes.push(nodes[i]);
-          }
-        }
-
-        console.log(nodes);
-        // context.createMediaStreamSource(stream);
-        nodes = new_nodes;
-
-    };
-        
 }]);
-
