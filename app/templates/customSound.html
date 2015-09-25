@@ -37,31 +37,26 @@
     </div>
 </div> -->
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-          <section>
-              <button ng-click="playMetronome($event)" ng-disabled="isDisabled">Play Metronome</button>
-              <button ng-click="pauseMetronome($event)">Pause Metronome</button>
-              <!-- <button ng-click="muteLoop()">Mute</button>
-              <button ng-click="unmuteLoop()">Unmute</button> -->
-              <button ng-click="reset()">Reset</button>
-          </section>
-          
-        </div>
-    </div>
-</div>
 
-<div class="page-wrapper">
+
+<div class="drum-pad-wrapper">
+    <section id="controls">
+      <i class="fa fa-play" ng-click="playMetronome($event)" ng-disabled="isDisabled"></i>
+      <i class="fa fa-pause"ng-click="pauseMetronome($event)"></i>
+      <i class="fa fa-stop" ng-click="reset()"></i>
+      <!-- <button ng-click="playMetronome($event)" ng-disabled="isDisabled">Play Metronome</button>
+      <button ng-click="pauseMetronome($event)">Pause Metronome</button> -->
+      <!-- <button ng-click="reset()">Reset</button> -->
+    </section>
     <section id="sp">
-      <div id="pad1"></div>
-      <div id="pad2"></div>
-      <div id="pad3"></div>
-      <div id="pad4"></div>
-      <div id="pad5"></div>
-      <div id="pad6"></div>
-      <div id="pad7"></div>
-      <div id="pad8"></div>
+      <div id="pad1"><p class="text">D</p></div>
+      <div id="pad2"><p class="text">F</p></div>
+      <div id="pad3"><p class="text">J</p></div>
+      <div id="pad4"><p class="text">K</p></div>
+      <div id="pad5"><p class="text">X</p></div>
+      <div id="pad6"><p class="text">C</p></div>
+      <div id="pad7"><p class="text">N</p></div>
+      <div id="pad8"><p class="text">M</p></div>
     </section>
     
 </div>

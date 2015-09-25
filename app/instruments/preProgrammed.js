@@ -1,6 +1,6 @@
 app.factory("instruments", function () {
     return {
-        organ: [
+        Organ: [
 
     0.000000,
     -0.000000,
@@ -110,8 +110,8 @@ app.factory("instruments", function () {
     0.000000,
     -0.000000
     ],
-    horn: [0,0.4,0.4,1,1,1,0.3,0.7,0.6,0.5,0.9,0.8],
-    instrumentNames: ["organ", "horn"]
+    Horn: [0,0.4,0.4,1,1,1,0.3,0.7,0.6,0.5,0.9,0.8],
+    instrumentNames: ["Organ", "Horn"]
 };
 
 });

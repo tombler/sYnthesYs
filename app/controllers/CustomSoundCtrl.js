@@ -79,10 +79,10 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
     // On keyup, returns pads to original color.
     $document.keyup(function (event) {
         // console.log(event);
-        $('#sp div').css('background-color', 'green');
+        $('#sp div').css('background-color', '#d3d3d3');
     });
 
-    <img src='imgURL.com'>
+    
 
 
 // ************************ LOOPING SAMPLES ****************************//
@@ -90,16 +90,16 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
         // This is a temporary fix.
         // t = the time since the user has loaded the page. While that time is < 500 sec, the loop will run every 2 sec.
         // t += ___ corresponds to time in seconds for one measure.
-        for (t; t < 500; t += 2) {
+        for (t; t < 200; t += 2) {
             // Changes background color for initial hit.     
-            $(elId).css('background-color', 'black');
+            $(elId).css('background-color', '#00AAAA');
             // Runs interval function to change pad color every measure only if loop is not broken.  
             $scope.changePadColor = $interval(function () {
-                if (!$scope.breakLoop) {$(elId).css('background-color', 'black');}
+                if (!$scope.breakLoop) {$(elId).css('background-color', '#00AAAA');}
             }, 2000);
             // Runs interval function to return pad color every measure only if loop is not broken.
             $scope.returnPadColor = $interval(function () {
-                if (!$scope.breakLoop) {$(elId).css('background-color', 'green');}
+                if (!$scope.breakLoop) {$(elId).css('background-color', '#d3d3d3');}
             }, 2010);
             // Get sample buffer from argument of function and start loop.
             $scope.source = context.createBufferSource();

@@ -20,11 +20,11 @@
         <div class="col-md-12">
             <div class="page-wrapper">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-8 table-div">
                         <table class="table table-condensed table-hover">
                             <thead ng-click="toggleTable()">
                               <tr>
-                                <th><a href="">Note-To-Keystroke Map</a></th>
+                                <th><p id="table-title">Note-To-Keystroke Map</p></th>
                               </tr>
                             </thead>
                             <tbody ng-show="showTable">
@@ -77,8 +77,8 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-md-4">
-                        <label for="exampleInputAmount">Choose Your Sound Wave</label>
+                    <div class="col-md-4 choose-wave">
+                        <p><strong>Choose Your Sound Wave</strong></p>
                         <div class="btn-group">
                             <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Waves'">Oscillator</label>
                             <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Instrument'">Instrument</label>
