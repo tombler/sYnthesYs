@@ -21,6 +21,22 @@ body {
     margin-right:-4px;
 }
 
+nav {
+  background-color: #FFF;
+  margin-bottom: 25px;
+}
+
+
+/*Loading*/
+
+.progress-bar.animate {
+   width: 100%;
+}
+
+.modal-dialog {
+  margin-top: 20%;
+}
+
 /*Home view styling:*/
 
 #welcome {
@@ -42,6 +58,7 @@ body {
 }
 
 #welcome p {
+  display: block;
   font-size: 2em;
   text-align: center;
 }
@@ -85,6 +102,11 @@ body {
 
 .navbar-brand {
   font-family: 'Seymour One', sans-serif;
+  color: #000;
+}
+
+.navbar-brand:hover {
+  color: #00AAAA;
 }
 
 .nav-tabs li {
@@ -101,6 +123,10 @@ body {
 
 
 /*Keyboard styling:*/
+
+#keyboard {
+  margin: 0 auto !important;
+}
 
 /*Adjust black key positions*/
 li[id='F#4'] {
@@ -127,11 +153,6 @@ li[id='F#3'] {
   left: 323px !important;
 }
 
-.table-div {
-  padding-right: 10px;
-  border-right: 2px solid #d3d3d3;
-}
-
 .page-wrapper {
 	width: 100%;
 	/*margin: 3rem auto;*/
@@ -154,9 +175,22 @@ li[id='F#3'] {
   background-color: rgb(255,255,255);
 }
 
+#table-title {
+  display: block;
+  text-align: center;
+  font-size: 1.2em;
+  margin-top: 10px;
+}
+
+
 #table-title:hover {
     cursor: pointer;
     color: #00AAAA;
+}
+
+.choose-wave p {
+  display: block;
+  text-align: center;
 }
 
 div p, th p {
@@ -166,6 +200,10 @@ div p, th p {
 .btn-group label{
   width: 50%;
   background-color: #00AAAA;
+  color: #FFF;
+}
+.btn-group .btn.active, .btn-group .btn:active {
+  background-color: #00CCAA;
 }
 
 .btn-group {
@@ -189,17 +227,17 @@ div p, th p {
 }
 
 #sp {
-  margin-left: 10%; 
+  margin-left: 15%; 
 }
 
 #sp div {
-    width: 200px;
-    height: 200px;
+    width: 170px;
+    height: 170px;
     background-color: #d3d3d3;
     display: inline-block;
-    -webkit-box-shadow: inset 14px -3px 98px 55px rgba(0,0,0,0.75);
-    -moz-box-shadow: inset 14px -3px 98px 55px rgba(0,0,0,0.75);
-    box-shadow: inset 14px -3px 98px 55px rgba(0,0,0,0.75);
+    -webkit-box-shadow: inset 19px -10px 93px 33px rgba(0,0,0,0.75);
+-moz-box-shadow: inset 19px -10px 93px 33px rgba(0,0,0,0.75);
+box-shadow: inset 19px -10px 93px 33px rgba(0,0,0,0.75);
     border-radius: 5px;
     margin-bottom: 5px;
     
@@ -218,9 +256,7 @@ font: normal 6em/1.1 'Fjalla One', Arial, sans-serif;
   /*border: .125em solid #5f5e61;*/
   display: inline-block;
   /*border-radius: .2em;*/
-  padding: 0.7em 0.85em;
-
-
+  padding: 0.5em 0.7em;
   -webkit-mask-image: url(http://f.cl.ly/items/131E0X1b1i0X1s263R00/a.png);
   /*-webkit-transform: rotate(-3deg);*/
 
@@ -235,77 +271,18 @@ font: normal 6em/1.1 'Fjalla One', Arial, sans-serif;
 }
 
 
-/* Play */
-.play_border {
-    margin:5px;
-    border: 2px solid rgba(0,0,0,0.7);
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    border-radius: 100%;
-    width: 40px;
-    height: 40px;
-    -webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    -ms-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-    cursor: pointer;
-}
-.play_border:hover{
-    border-color: transparent;
-    -webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
-    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
-}
-.play_border:hover .play_button, .pause_button{
-    border-left: 10px solid rgba(0,0,0,0.5);
-}
-.play_border:active,.play_border:focus{
-    -webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0px 0px 5.play_button:hoverpx 2px rgba(0, 0, 0, 0.2);
-    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
-}
-.play_button {
-    position:relative;
-    top: 10px;
-    left: 40%;
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 10px solid rgba(0,0,0,0.8);
-} 
-
-.pause_button {
-  position:relative;
-    top: 10px;
-    left: 40%;
-    width: 0;
-    height: 0;
-  /*  border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 5px solid rgba(0,0,0,0.8);
-    border-right: 5px solid rgba(0,0,0,0.8);*/
-}
+/* Controls */
 
 i.fa {
- /*display: inline-block;*/
-  text-align: center;
-  font-size: 2em;
-  border: 2px solid rgba(0,0,0,0.7);
+  padding: 5px 10px;
+  /*border: 2px solid rgba(0,0,0,0.7);*/
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
-    border-radius: 100%;
-    padding-top: 8px;
-    width: 50px;
-    height: 50px;
-    -webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
-    -webkit-transition: all 0.5s ease;
+    border-radius: 100px;
+    display: inline-block;
+
+  font-size: 30px;
+      -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     -ms-transition: all 0.5s ease;
@@ -315,48 +292,115 @@ i.fa {
 
 i.fa:hover{
     border-color: transparent;
+    border-radius: 5px;
     color: rgba(0,0,0,0.5);
     -webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
 }
-i.fa:hover .play_button, .pause_button{
-    border-left: 10px solid rgba(0,0,0,0.5);
-}
+
 i.fa:active,i.fa:focus{
     -webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0px 0px 5.play_button:hoverpx 2px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
 }
 
-#controls {
-  margin: 10px 40%;
+i.fa-toggle-on, i.fa-toggle-on:hover, i.fa-toggle-on:active, i.fa-toggle-on:focus {
+  border:none;
+  box-shadow: none;
+ 
+}
+
+.controls p:nth-of-type(2) {
+  margin-left: 20px;
+  padding-left: 10px;
+  border-left: 2px solid black;
+}
+
+.fa-fw {
+  width: 3em;
+  margin-top: 20px;
+}
+
+.controls {
+  line-height: 100%;
+}
+
+i.active { color: #5cb85c}
+i.inactive {color: #d9534f}
+
+.navbar-fixed-bottom {
+  padding: 10px;
 }
 
 
 
 
+/*DJ Styling*/
 
+.dj-wrapper {
 
-.page-wrapper-dj {
-    width: 875px;
-    height: 500px;
-    margin: 3rem auto;
-    padding: 1.5rem;
-    background: #FFF;
-    border-top: 5px solid #69c773;
+  margin: 3rem 5%;
+  padding: 1.5rem;
+  background: #FFF;
+  border-radius: 5px;
+  margin-bottom: 10px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.8);
-
 }
+
+.dj-wrapper h1 {
+  text-align: center;
+}
+
+.thumbnail {
+  width: 80%;
+  height: 300px;
+  padding: 0px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.caption {
+  text-align: center;
+  color: #FFF;
+  line-height: 200%;
+}
+
+.caption * {
+  color: #FFF;
+}
+
+#song-controls {
+  text-align: center;
+}
+
+#song-controls i:hover {
+  color: #00AAAA;
+}
+
+.thumbnail {
+  background: url(img/Adventure-Club.jpg);
+  max-width: 300px;
+  overflow: hidden;
+  /*z-index: -1;*/
+}
+
+canvas p {
+  color: white;
+}
+
+
+
 
 #filter, #delay {
     float: left;
     width: 300px;
     height: 300px;
-    border-radius: 3px;
+    border-radius: 5px;
+    /*border: 2px solid black;*/
     background: #1E1E1E url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIUlEQVQYV2P8+vWrJAMRgBGkkJub+zkhtaMK8YYQ0cEDABxGJwNr5yClAAAAAElFTkSuQmCC);
     margin: 5px;
-    margin-left: 10%;
+    /*margin-left: 10%;*/
 }
 
 #filter:hover, #delay:hover {
@@ -369,7 +413,7 @@ i.fa:active,i.fa:focus{
 
 #info {
     clear: both;
-    margin-left: 20%;
+    /*margin-left: 20%;*/
     padding-left: 2rem;
     padding-top: 1rem;
     -moz-user-select: none;
@@ -381,61 +425,30 @@ h1 {
     font-weight: normal;
 }
 
-/*p {
-    line-height: 1.8rem;
-}*/
-
-.clearfix {
-  *zoom: 1;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  line-height: 0;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both;
+.num {
+  font-size: 1.2em;
 }
 
 
-
-
-
-li.draggable {
-    width: 100px;
-    height: 100px;
-    display: inline-block;
-    background-color: red;
-    margin: 5px;
-}
-
-.cursor {
-    cursor: 'pointer' !important;
-
-}
-
-
-/*Slider*/
+/*Playback rate slider*/
 
 .progress-box {
     width: 100%;
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 .progress-box .percentage-cur .num {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .progress-box .progress-bar {
-    width: 100%;
-    height: 12px;
-    background: #f2f1f1;
-    margin-bottom: 3px;
-    border: 1px solid #dfdfdf;
-    box-shadow: 0 0 2px #D5D4D4 inset;
+  margin-top: 5px;
+  width: 100%;
+  height: 12px;
+  background: #f2f1f1;
+  margin-bottom: 3px;
+  border: 1px solid #dfdfdf;
+  box-shadow: 0 0 2px #D5D4D4 inset;
   position: relative;
 }
 

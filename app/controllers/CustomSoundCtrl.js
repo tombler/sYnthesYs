@@ -1,4 +1,4 @@
-app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$firebaseArray", "$interval", "$window", "audioSampleLoader", function ($scope, storage, $document, $http, $firebaseArray, $interval, $window, audioSampleLoader) {
+app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$interval", "$window", "audioSampleLoader", function ($scope, storage, $document, $http, $interval, $window, audioSampleLoader) {
     
     // Set up variables
     var context = storage.context;
@@ -6,6 +6,7 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
     $scope.bufferPads = [];
     $scope.isDisabled = false;
     $scope.breakLoop = false;
+    $scope.status = true;
 
 // ******************** LOAD ALL SAMPLES FOR THE PAGE ********************//
     var loader = new audioSampleLoader();
@@ -86,22 +87,38 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
 
 
 // ************************ LOOPING SAMPLES ****************************//
+
+    // Toggles loop on/off
+    $scope.changeStatus = function(){
+        $scope.status = !$scope.status;
+    };
+
     function playSound(buffer, t, elId) {
-        // This is a temporary fix.
-        // t = the time since the user has loaded the page. While that time is < 500 sec, the loop will run every 2 sec.
-        // t += ___ corresponds to time in seconds for one measure.
-        for (t; t < 200; t += 2) {
-            // Changes background color for initial hit.     
+        // Check if loop switch is on.
+        if ($scope.status === true) {
+            // This is a temporary fix.
+            // t = the time since the user has loaded the page. While that time is < 500 sec, the loop will run every 2 sec.
+            // t += ___ corresponds to time in seconds for one measure.
+            for (t; t < 200; t += 2) {
+                // Changes background color for initial hit.     
+                $(elId).css('background-color', '#00AAAA');
+                // Runs interval function to change pad color every measure only if loop is not broken.  
+                $scope.changePadColor = $interval(function () {
+                    if (!$scope.breakLoop) {$(elId).css('background-color', '#00AAAA');}
+                }, 2000);
+                // Runs interval function to return pad color every measure only if loop is not broken.
+                $scope.returnPadColor = $interval(function () {
+                    if (!$scope.breakLoop) {$(elId).css('background-color', '#d3d3d3');}
+                }, 2010);
+                // Get sample buffer from argument of function and start loop.
+                $scope.source = context.createBufferSource();
+                $scope.source.buffer = buffer;
+                $scope.source.connect(context.destination);
+                $scope.source.start(t);
+            }
+        } else {
+            // If loop switch is off.
             $(elId).css('background-color', '#00AAAA');
-            // Runs interval function to change pad color every measure only if loop is not broken.  
-            $scope.changePadColor = $interval(function () {
-                if (!$scope.breakLoop) {$(elId).css('background-color', '#00AAAA');}
-            }, 2000);
-            // Runs interval function to return pad color every measure only if loop is not broken.
-            $scope.returnPadColor = $interval(function () {
-                if (!$scope.breakLoop) {$(elId).css('background-color', '#d3d3d3');}
-            }, 2010);
-            // Get sample buffer from argument of function and start loop.
             $scope.source = context.createBufferSource();
             $scope.source.buffer = buffer;
             $scope.source.connect(context.destination);
@@ -109,9 +126,11 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
         }
     }
 
+
     // Refreshes page to reset loop. Unable to break out of for loop ^^^, this is temporary solution.
     $scope.reset = function () {
         $window.location.reload();
     };
 
 }]);
+

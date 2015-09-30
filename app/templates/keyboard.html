@@ -1,33 +1,86 @@
-<nav class="navbar navbar-default">
+<nav>
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#/home">
           sYnthesYs
         </a>
       </div>
-      <ul class="nav nav-tabs">
-        <li role="presentation"><a href="#/keyboard"><img src="img/keyboard-icon.jpg"></a></li>
+      <ul class="nav nav-tabs pull-right">
+        <li role="presentation" class='active'><a href="#/keyboard"><img src="img/keyboard-icon.jpg"></a></li>
         <li role="presentation"><a href="#/custom" ng-click="closeAudio()"><img src="img/drumsticks-icon.png"></a></li>
         <li role="presentation"><a href="#/dj"><img src="img/DJ-icon.png"></a></li>
       </ul>
     </div>
 </nav>
 
+<div class="modal js-loading-bar">
+ <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-body">
+       <div class="progress progress-popup">
+        <div class="progress-bar"></div>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
 
 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="page-wrapper">
-                <div class="row">
-                    <div class="col-md-8 table-div">
+                <div class="row row-centered">
+                    <div class="col-md-4 col-centered choose-wave">
+                        <p><strong>Choose Your Sound Wave</strong></p>
+                        <div class="btn-group">
+                            <label class="btn" ng-model="radioModel" btn-radio="'Waves'">Synthesizer</label>
+                            <label class="btn" ng-model="radioModel" btn-radio="'Instrument'">Instrument</label>
+                            <!-- <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Custom'">Custom</label> -->
+                        </div>
+                        <select class="form-control" ng-options="type for type in waveTypeList" ng-model="waveType" ng-show="radioModel === 'Waves'" ng-change="load()">
+                            <option value="">Choose Wave Shape</option>
+                        </select>
+                        <select class="form-control" ng-show="radioModel === 'Instrument'" ng-options="instrument for instrument in instruments.instrumentNames" ng-model="chosenInstrument" ng-change="chooseInstrument(chosenInstrument)">
+                            <option value="">Choose Your Instrument</option>
+                        </select>
+                        <!-- <form class="form" ng-show="radioModel === 'Custom'">
+                            <div class="form-group">
+                                <div class="input-group" ng-repeat="value in placeholderWaveValues">
+                                  <div class="input-group-addon"></div>
+                                  <input type="text" class="form-control customValuesInput" id="exampleInputAmount" ng-model="customWaveValues[$index]" placeholder="{{value.value}}" maxlength="2">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" ng-click="createWave(customWaveValues)">Create Wave</button>
+                        </form> -->
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="page-wrapper">
+                <div class="container">
+                    <div class="row row-centered">
+                        <!-- <div class="spinner-loader">
+                          Loading…
+                        </div> -->
+                        <div class="col-md-9 col-centered">
+                            <div id="keyboard"></div>
+                        </div>
+
+                        
+                
+                    </div>
+                    <div class="row row-centered">
+                        <div class="col-md-8 col-centered table-div">
+                        <p id="table-title" ng-click="toggleTable()">Note-To-Keystroke Map</p>
                         <table class="table table-condensed table-hover">
-                            <thead ng-click="toggleTable()">
+                            <thead>
                               <tr>
-                                <th><p id="table-title">Note-To-Keystroke Map</p></th>
+                                <th></th>
                               </tr>
                             </thead>
-                            <tbody ng-show="showTable">
+                            <tbody ng-hide="showTable">
                               <tr>
                                 <th>Note</th>
                                 <td>C</td>
@@ -77,42 +130,6 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-md-4 choose-wave">
-                        <p><strong>Choose Your Sound Wave</strong></p>
-                        <div class="btn-group">
-                            <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Waves'">Oscillator</label>
-                            <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Instrument'">Instrument</label>
-                            <!-- <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Custom'">Custom</label> -->
-                        </div>
-                        <select class="form-control" ng-options="type for type in waveTypeList" ng-model="waveType" ng-show="radioModel === 'Waves'">
-                            <option value="">Choose Wave Shape</option>
-                        </select>
-                        <select class="form-control" ng-show="radioModel === 'Instrument'" ng-options="instrument for instrument in instruments.instrumentNames" ng-model="chosenInstrument" ng-change="chooseInstrument(chosenInstrument)">
-                            <option value="">Choose Your Instrument</option>
-                        </select>
-                        <!-- <form class="form" ng-show="radioModel === 'Custom'">
-                            <div class="form-group">
-                                <div class="input-group" ng-repeat="value in placeholderWaveValues">
-                                  <div class="input-group-addon"></div>
-                                  <input type="text" class="form-control customValuesInput" id="exampleInputAmount" ng-model="customWaveValues[$index]" placeholder="{{value.value}}" maxlength="2">
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary" ng-click="createWave(customWaveValues)">Create Wave</button>
-                        </form> -->
-                    </div>
-                </div>
-            </div>
-            
-
-            <div class="page-wrapper">
-                <div class="container">
-                    <div class="row row-centered">
-                        
-                        <div class="col-md-9 col-centered">
-                            <div id="keyboard"></div>
-                        </div>
-                        
-                
                     </div>
                     <!-- <div class="row">
                         <h1>Recorder.js simple WAV export example</h1>
@@ -132,6 +149,7 @@
                     </div> -->
                 </div>
             </div>
+
         </div>
     </div>
 </div>

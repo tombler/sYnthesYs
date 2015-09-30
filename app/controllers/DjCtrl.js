@@ -1,4 +1,4 @@
-app.controller("DjCtrl", ["$scope", "instruments", "recordingFactory", "storage", "$http", "ngDraggable", function ($scope, instruments, recordingFactory, storage, $http, ngDraggable) {
+app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", function ($scope, instruments, storage, $http) {
 
     // Call to get audio.
     $http({
@@ -23,6 +23,7 @@ app.controller("DjCtrl", ["$scope", "instruments", "recordingFactory", "storage"
       QUAL_MUL: 30,
       playing: false
     };
+    var analyser = context.createAnalyser(); // For visuals.
 
     // **************Set up effects****************
     
@@ -42,7 +43,8 @@ app.controller("DjCtrl", ["$scope", "instruments", "recordingFactory", "storage"
         $scope.source.buffer = $scope.songBuffer;
         $scope.masterGain = context.createGain();
         $scope.masterGain.gain.value = 1;
-        $scope.source.connect($scope.masterGain);
+        $scope.source.connect(analyser);
+        analyser.connect($scope.masterGain);
         $scope.masterGain.connect(context.destination); // Connects source to audio context
         $scope.source.start(0); // Starts playing
 
@@ -51,7 +53,8 @@ app.controller("DjCtrl", ["$scope", "instruments", "recordingFactory", "storage"
         $scope.effectSource.buffer = $scope.songBuffer;      
         $scope.effectGainNode = context.createGain();
         $scope.effectGainNode.gain.value = 0;
-        $scope.effectSource.connect($scope.effectGainNode);
+        $scope.effectSource.connect(analyser);
+        analyser.connect($scope.effectGainNode);
         $scope.effectGainNode.connect(context.destination);        
         $scope.effectSource.start(0); // Starts playing
     };
@@ -117,7 +120,8 @@ app.controller("DjCtrl", ["$scope", "instruments", "recordingFactory", "storage"
             $scope.effectGainNode.gain.value = 0.8;
             $scope.masterGain.gain.value = 0.5;
 
-            $scope.effectSource.connect($scope.delayEffect);
+            $scope.effectSource.connect(analyser);
+            analyser.connect($scope.delayEffect);
             $scope.delayEffect.connect($scope.effectGainNode);
             $scope.effectGainNode.connect(context.destination);
             // $scope.effectSource.connect(context.destination);
@@ -138,8 +142,6 @@ app.controller("DjCtrl", ["$scope", "instruments", "recordingFactory", "storage"
         $scope.effectSource.playbackRate.value = calculatedPBV;
 
     };
-
-
 
     $scope.closeAudio = function () {
         $scope.masterGain.disconnect(context.destination);

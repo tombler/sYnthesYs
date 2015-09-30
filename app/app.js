@@ -1,4 +1,4 @@
-var app = angular.module("sYnthesYs", ['ngRoute', 'firebase', 'ui.bootstrap', 'ngDraggable']);
+var app = angular.module("sYnthesYs", ['ngRoute', 'ui.bootstrap']);
 
 app
 
@@ -47,6 +47,6 @@ app
             
         }).
         otherwise({
-            redirectTo: '/keyboard'
+            redirectTo: '/home'
         });
 }]);

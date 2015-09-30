@@ -45,8 +45,8 @@ app.controller("HomeCtrl", ["$scope", "$location" ,function ($scope, $location) 
             
                 // Calc growth
             rad = circs[i].attr("r");
-            if (circs[i].grow > 0) circs[i].attr("r", Math.min(30, rad +  .1));
-            else                   circs[i].attr("r", Math.max(10,  rad -  .1));
+            if (circs[i].grow > 0) circs[i].attr("r", Math.min(30, rad + 0.1));
+            else                   circs[i].attr("r", Math.max(10,  rad - 0.1));
             
                 // Calc curve
             if (circs[i].curve > 0) circs[i].deg = circs[i].deg + 2;
@@ -55,18 +55,18 @@ app.controller("HomeCtrl", ["$scope", "$location" ,function ($scope, $location) 
                 // Calc opacity
             opa = circs[i].attr("fill-opacity");
             if (circs[i].fade > 0) {
-                circs[i].attr("fill-opacity", Math.max(.3, opa -  .01));
-                circs[i].attr("stroke-opacity", Math.max(.3, opa -  .01)); }
+                circs[i].attr("fill-opacity", Math.max(0.3, opa - 0.01));
+                circs[i].attr("stroke-opacity", Math.max(0.3, opa - 0.01)); }
             else {
-                circs[i].attr("fill-opacity", Math.min(1, opa +  .01));
-                circs[i].attr("stroke-opacity", Math.min(1, opa +  .01)); }
+                circs[i].attr("fill-opacity", Math.min(1, opa + 0.01));
+                circs[i].attr("stroke-opacity", Math.min(1, opa + 0.01)); }
 
             // Progress timer for particle
             circs[i].time = circs[i].time - 1;
             
                 // Calc damping
             if (circs[i].vel < 1) circs[i].time = 0;
-            else circs[i].vel = circs[i].vel - .05;              
+            else circs[i].vel = circs[i].vel -0.05;              
        
         } 
         timer = setTimeout(moveIt, 60);
@@ -88,7 +88,7 @@ app.controller("HomeCtrl", ["$scope", "$location" ,function ($scope, $location) 
 
     $scope.goToKeyboard = function () {
         $location.url('/keyboard');
-    }
+    };
 
 
 

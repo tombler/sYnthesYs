@@ -1,53 +1,20 @@
-<nav class="navbar navbar-default">
+<nav>
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#/home">
           sYnthesYs
         </a>
       </div>
-      <ul class="nav nav-tabs">
-        <li role="presentation"><a href="#/keyboard" ng-click="closeAudio()"><img src="img/keyboard-icon.jpg"></a></li>
-        <li role="presentation"><a href="#/custom"><img src="img/drumsticks-icon.png"></a></li>
+      <ul class="nav nav-tabs pull-right">
+        <li role="presentation"><a href="#/keyboard"><img src="img/keyboard-icon.jpg"></a></li>
+        <li role="presentation" class="active"><a href="#/custom" ng-click="closeAudio()"><img src="img/drumsticks-icon.png"></a></li>
         <li role="presentation"><a href="#/dj"><img src="img/DJ-icon.png"></a></li>
       </ul>
     </div>
 </nav>
-<!-- <div id="controls">
-  <div>
-    <a class="play" ng-click="playSolidMetronome(tempo)">play</a>
-  </div>
-  <div id="tempoBox">Tempo: 
-    <span id="showTempo">{{tempo}}</span>BPM 
-    <input id="tempo" type="range" min="60.0" max="160.0" step="1" value="120" style="height: 20px; width: 200px" ng-model="tempo">
-  </div>
-  <div>Resolution:
-    <select onchange="noteResolution = this.selectedIndex;">
-      <option>16th notes<option>8th notes<option>Quarter notes
-    </select>
-  </div>
-</div> -->
-<!-- <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-          <ul class="draggable-objects">
-              <li ng-repeat="obj in buffersObject.slots" class="draggable">{{obj.name}}
-              </li>
-          </ul>
-        </div>
-    </div>
-</div> -->
-
-
 
 <div class="drum-pad-wrapper">
-    <section id="controls">
-      <i class="fa fa-play" ng-click="playMetronome($event)" ng-disabled="isDisabled"></i>
-      <i class="fa fa-pause"ng-click="pauseMetronome($event)"></i>
-      <i class="fa fa-stop" ng-click="reset()"></i>
-      <!-- <button ng-click="playMetronome($event)" ng-disabled="isDisabled">Play Metronome</button>
-      <button ng-click="pauseMetronome($event)">Pause Metronome</button> -->
-      <!-- <button ng-click="reset()">Reset</button> -->
-    </section>
+    
     <section id="sp">
       <div id="pad1"><p class="text">D</p></div>
       <div id="pad2"><p class="text">F</p></div>
@@ -59,6 +26,32 @@
       <div id="pad8"><p class="text">M</p></div>
     </section>
     
+</div>
+
+<div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+  <div class="container">
+    <div class="row">
+      <div class='col-md-2'></div>
+      <div class='col-md-4 controls text-center'>
+        <i class="fa fa-play" ng-click="playMetronome($event)" ng-disabled="isDisabled"></i>
+        <i class="fa fa-pause"ng-click="pauseMetronome($event)"></i>
+        <label>Metronome Controls</label>
+      </div>
+      <div class='col-md-4 controls text-center'>
+        <i class="fa fa-toggle-on active"
+         ng-if="status == true" 
+         ng-click="changeStatus();">
+        </i>
+        <i class="fa fa-toggle-on fa-rotate-180 inactive"
+           ng-if="status == false"
+           ng-click="changeStatus();">
+        </i>
+        <i class="fa fa-stop" ng-click="reset()"></i>
+        <label>Loop Controls</label>
+      </div>
+      <div class='col-md-2'></div>
+    </div>
+  </div>
 </div>
 
 
