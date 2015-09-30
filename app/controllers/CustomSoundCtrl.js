@@ -1,5 +1,15 @@
 app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$interval", "$window", "audioSampleLoader", function ($scope, storage, $document, $http, $interval, $window, audioSampleLoader) {
     
+    // Modal progress bar to show while loading instrument.
+    var $modal = $('.js-loading-bar'),
+    $bar = $modal.find('.progress-bar');
+    $modal.modal('show');
+    $bar.addClass('animate');
+    setTimeout(function() {
+        $bar.removeClass('animate');
+        $modal.modal('hide');
+    }, 1500);
+
     // Set up variables
     var context = storage.context;
     var elId;

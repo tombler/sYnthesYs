@@ -1,19 +1,89 @@
-app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", function ($scope, instruments, storage, $http) {
+app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterModel", function ($scope, instruments, storage, $http, WaterModel) {
 
-    // Call to get audio.
+    // Modal progress bar to show while loading song.
+    var $modal = $('.js-loading-bar'),
+    $bar = $modal.find('.progress-bar');
+    $modal.modal('show');
+    $bar.addClass('animate');
+    setTimeout(function() {
+        $bar.removeClass('animate');
+        $modal.modal('hide');
+    }, 1500);
+
+
+// *********** SET UP RIPPLE CANVASES ****************** //
+
+    var width = 300;
+    var height = 300;
+
+    var waterModelFilter = new WaterModel(width, height, {
+        resolution:2.0,
+        interpolate:false,
+        damping:0.9,
+        clipping:5,
+        evolveThreshold:0.05,
+        maxFps:30,
+        showStats:true
+    });
+
+    var waterModelDelay = new WaterModel(width, height, {
+        resolution:2.0,
+        interpolate:false,
+        damping:0.9,
+        clipping:5,
+        evolveThreshold:0.05,
+        maxFps:30,
+        showStats:true
+    });
+    
+    var filterCanvas = new WaterCanvas(width, height, "filter", waterModelFilter, {
+        backgroundImageUrl:"img/Adventure-Club.jpg",
+        lightRefraction:9.0,
+        lightReflection:0.1,
+        maxFps:20,
+        showStats:true
+    });
+
+    var delayCanvas = new WaterCanvas(width, height, "delay", waterModelDelay, {
+        backgroundImageUrl:"img/Adventure-Club.jpg",
+        lightRefraction:9.0,
+        lightReflection:0.1,
+        maxFps:20,
+        showStats:true
+    });
+
+    var finger = [
+        [0.5, 1.0, 0.5],
+        [1.0, 1.0, 1.0],
+        [0.5, 1.0, 0.5]
+    ];
+
+
+// ***************** GET AUDIO ******************** //
+
+    // $http({
+    //     url: 'sounds/needYourHeart.mp3',
+    //     method: 'GET',
+    //     responseType: 'arraybuffer'
+    // })
+    // .success(function (data) {
+    //     // console.log(data);
+    //     context.decodeAudioData(data, function (buffer) {
+    //         $scope.songBuffer = buffer;
+    //         // console.log(buffer);
+            
+    //     });
+    // });
+
     $http({
-        url: 'sounds/needYourHeart.mp3',
-        method: 'GET',
-        responseType: 'arraybuffer'
+        url: 'https://accounts.spotify.com/authorize/?client_id=076ef4c8ecbc45ba94936575d48b7df8&response_type=code&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&scope=user-read-private%20user-read-email&state=34fFs29kd09',
+        method: 'GET'
     })
     .success(function (data) {
-        // console.log(data);
-        context.decodeAudioData(data, function (buffer) {
-            $scope.songBuffer = buffer;
-            // console.log(buffer);
-            
-        });
+        console.log(data);
     });
+
+    
 
 
     // Set up audio variables.
@@ -25,7 +95,10 @@ app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", function 
     };
     var analyser = context.createAnalyser(); // For visuals.
 
-    // **************Set up effects****************
+
+
+
+// *********************Set up effects*********************** //
     
     // Filter
     $scope.filter = context.createBiquadFilter();
@@ -76,7 +149,8 @@ app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", function 
 
     $scope.addEffects = function ($event) {
         if ($event.which == 1) {
-            // console.log("mousedown and moving");
+            // Track mousepad movement for canvas ripples.
+            waterModelFilter.touchWater($event.offsetX, $event.offsetY, 1.5, finger);
 
             //Calculate freq value to a number between 0.01 and 1.
             var adjustedFreq = 1 - ($event.offsetY * 0.0033);
@@ -114,7 +188,9 @@ app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", function 
 
     $scope.addDelay = function ($event) {
         if ($event.which == 1) {
-            // console.log("yes")
+            // Track mousepad movement for canvas ripples.
+            waterModelDelay.touchWater($event.offsetX, $event.offsetY, 1.5, finger);
+
             $scope.effectGainNode.disconnect(context.destination);
             $scope.delayEffect.delayTime.value = $event.offsetY * 0.006633;
             $scope.effectGainNode.gain.value = 0.8;
@@ -129,8 +205,12 @@ app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", function 
     };
 
     $scope.removeDelay = function ($event) {
-        $scope.effectGainNode.gain.value = 0;
-        $scope.masterGain.gain.value = 1;
+        // Let delay feedback for 1.5 seconds after mouse release.
+        setTimeout(function () {
+            $scope.effectGainNode.gain.value = 0;
+            $scope.masterGain.gain.value = 1;
+        }, 1500)
+        
     };
 
     $scope.changePlaybackRate = function (selectedRange) {
@@ -148,7 +228,3 @@ app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", function 
     };
 
 }]);
-
-
-
-

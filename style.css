@@ -398,9 +398,13 @@ canvas p {
     height: 300px;
     border-radius: 5px;
     /*border: 2px solid black;*/
-    background: #1E1E1E url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIUlEQVQYV2P8+vWrJAMRgBGkkJub+zkhtaMK8YYQ0cEDABxGJwNr5yClAAAAAElFTkSuQmCC);
+    /*background: #1E1E1E url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIUlEQVQYV2P8+vWrJAMRgBGkkJub+zkhtaMK8YYQ0cEDABxGJwNr5yClAAAAAElFTkSuQmCC);*/
     margin: 5px;
     /*margin-left: 10%;*/
+}
+
+#filter canvas, #delay canvas {
+  border-radius: 5px;
 }
 
 #filter:hover, #delay:hover {

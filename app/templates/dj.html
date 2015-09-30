@@ -1,3 +1,7 @@
+
+
+<!-- <div id="waterHolder" ng-mousemove="ripple($event)"></div> -->
+
 <nav>
     <div class="container-fluid">
       <div class="navbar-header">
@@ -13,6 +17,18 @@
     </div>
 </nav>
 
+<div class="modal js-loading-bar">
+ <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-body">
+       <div class="progress progress-popup">
+        <div class="progress-bar"></div>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+
 
 <div class="dj-wrapper">
   <h1>Browser DJ</h1>
@@ -20,12 +36,12 @@
     <div class="row">
       <div class="col-md-4">
         <!-- Filter canvas -->
-        <canvas id="filter" ng-mousedown="connectEffectGain()" ng-mousemove="addEffects($event)" ng-mouseup="removeEffects($event)" ng-mouseout="removeEffects($event)"><p>Filter</p></canvas>
+        <div id="filter" ng-mousedown="connectEffectGain()" ng-mousemove="addEffects($event)" ng-mouseup="removeEffects($event)" ng-mouseout="removeEffects($event)"></div>
 
       </div>
       <div class="col-md-4">
         <!-- Delay canvas -->
-        <canvas id="delay" ng-mousedown="connectDelayGain()" ng-mousemove="addDelay($event)" ng-mouseup="removeDelay($event)" ng-mouseout="removeDelay($event)"></canvas>
+        <div id="delay" ng-mousedown="connectDelayGain()" ng-mousemove="addDelay($event)" ng-mouseup="removeDelay($event)" ng-mouseout="removeDelay($event)"></div>
       </div>
       <div class="col-md-4">
         <div class="thumbnail">
@@ -53,3 +69,31 @@
     </div> <!-- Row -->
   </div> <!-- Container -->
 </div> <!-- DJ wrapper -->
+
+
+<!-- <div>
+    <div id="login">
+     <h1>First, log in to spotify</h1>
+     <a href="/login">Log in</a>
+    </div>
+    <div id="loggedin">
+    </div>
+ </div>
+
+ <script id="loggedin-template" type="text/x-handlebars-template">
+    <h1>Logged in as {{display_name}}</h1>
+    <img id="avatar" width="200" src="{{images.0.url}}" />
+    <dl>
+     <dt>Display name</dt><dd>{{display_name}}</dd>
+     <dt>Username</dt><dd>{{id}}</dd>
+     <dt>Email</dt><dd>{{email}}</dd>
+     <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
+     <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
+     <dt>Profile Image</dt><dd>{{images.0.url}}</dd>
+    </dl>
+    <p><a href="/">Log in again</a></p>
+ </script>
+
+
+
+ -->
