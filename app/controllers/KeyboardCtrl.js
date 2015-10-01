@@ -104,6 +104,7 @@ app.controller("KeyboardCtrl", ["$scope", "instruments", "storage", function ($s
 
         // Checks which radio button is selected and sets oscillator values appropriately.
         if ($scope.radioModel === 'Waves') {
+            console.log($scope.waveType.toLowerCase());
             $scope.vco.type = $scope.waveType.toLowerCase(); 
         } else if ($scope.radioModel === 'Custom' || $scope.radioModel === 'Instrument') {
             $scope.vco.setPeriodicWave($scope.customWave);    

@@ -21,9 +21,21 @@ app
     };
 })
 
-.run(['storage', function(storage) {
+.directive('instructionsPopover', function () {
 
-}])
+    return {
+        restrict: 'A',
+        link: function (scope, el, attrs) {
+            // scope.label = attrs.popoverLabel;
+            $(el).popover({
+                trigger: 'hover',
+                html: true,
+                content: attrs.popoverHtml,
+                placement: attrs.popoverPlacement
+            });
+        }
+    };
+})
 
 .config(['$routeProvider', function ($routeProvider) {
     $routeProvider.

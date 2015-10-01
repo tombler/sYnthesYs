@@ -1,99 +1,98 @@
-
-
-<!-- <div id="waterHolder" ng-mousemove="ripple($event)"></div> -->
-
 <nav>
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#/home">
-          sYnthesYs
-        </a>
-      </div>
-      <ul class="nav nav-tabs pull-right">
-        <li role="presentation"><a href="#/keyboard"><img src="img/keyboard-icon.jpg"></a></li>
-        <li role="presentation"><a href="#/custom" ng-click="closeAudio()"><img src="img/drumsticks-icon.png"></a></li>
-        <li role="presentation" class='active'><a href="#/dj"><img src="img/DJ-icon.png"></a></li>
-      </ul>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#/home">
+        sYnthesYs
+      </a>
     </div>
+    <ul class="nav nav-tabs pull-right">
+      <li role="presentation"><a href="#/keyboard"><img src="img/keyboard-icon.jpg"></a></li>
+      <li role="presentation"><a href="#/custom" ng-click="closeAudio()"><img src="img/drumsticks-icon.png"></a></li>
+      <li role="presentation" class='active'><a href="#/dj"><img src="img/DJ-icon.png"></a></li>
+    </ul>
+  </div>
 </nav>
 
-<div class="modal js-loading-bar">
- <div class="modal-dialog">
-   <div class="modal-content">
-     <div class="modal-body">
-       <div class="progress progress-popup">
-        <div class="progress-bar"></div>
-       </div>
-     </div>
-   </div>
- </div>
+<div id="popup1" class="overlay" ng-hide="hideModal">
+  <div class="popup">
+    <h2>DJ JavaScratch <small>&copy;</small></h2>
+    <a class="close" ng-click="hide()">&times;</a>
+    <div class="content">
+      <ul>
+        <li>Click play to start the song.</li>
+        <li>Click and drag over the left picture to create a filter.</li>
+        <li>Click and drag over the right picture to create delay.</li>
+        <li>Move the playback rate slider to increase the tempo/pitch.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="dj-wrapper">
+  
+    <div class="canvas-wrapper">
+        <!-- Filter canvas -->
+        <div id="filter" ng-mousedown="connectEffectGain()" ng-mousemove="addEffects($event)" ng-mouseup="removeEffects($event)" ng-mouseout="removeEffects($event)"></div>
+    </div>
+
+    <div class="canvas-wrapper">
+        <!-- Delay canvas -->
+        <div id="delay" ng-mousedown="connectDelayGain()" ng-mousemove="addDelay($event)" ng-mouseup="removeDelay($event)" ng-mouseout="removeDelay($event)"></div>
+    </div>
+
+</div> <!-- DJ wrapper -->
+
+<div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2 song-image">
+        <img src="{{currentSongImg}}" alt="Adventure Club" width="100px" max-height="80px">
+      </div>
+      <div class="col-md-3 song-info">
+        <p><strong>{{currentSongTitle}}</strong></p>
+        <p>{{currentSongArtist}}</p>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-1"></div>
+      <div class="col-md-2 playbackRate">
+        <!-- Playback Rate slider -->
+        <div class="progress-box" ng-app>
+          <div class="percentage-cur" ng-init="selectedRange=100">
+            <span class="num"><strong>Playback Rate:</strong> {{ selectedRange }} %</span>
+          </div>
+          <div class="progress-bar progress-bar-slider">
+            <input class="progress-slider" type="range" min="50" max="200" ng-model="selectedRange" ng-change="changePlaybackRate(selectedRange)">
+            <div class="inner" ng-style="{ width: selectedRangePercent || '33.3%' }"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div id="song-controls">
+          <i class="fa fa-fast-backward" ng-click="prevSong()"></i>
+          <i class="fa fa-play" ng-click="playSong()"></i>
+          <i class="fa fa-stop" ng-click="pauseSong()"></i>
+          <i class="fa fa-fast-forward" ng-click="nextSong()"></i>
+          
+
+         <i class="fa fa-question" instructions-popover popover-html="
+            <div class='popup'>
+              <h2>DJ JavaScratch <small>&copy;</small></h2>
+              <a class='close' ng-click='hide()'>&times;</a>
+              <div class='content'>
+                <ul>
+                  <li>Click play to start the song.</li>
+                  <li>Click and drag over the left picture to create a filter.</li>
+                  <li>Click and drag over the right picture to create delay.</li>
+                  <li>Move the playback rate slider to change the tempo/pitch.</li>
+                </ul>
+              </div>
+            </div>
+         " popover-placement="top"></i>
+        </div> <!-- song controls -->
+      </div>
+    </div>
+  </div>
 </div>
 
 
-<div class="dj-wrapper">
-  <h1>Browser DJ</h1>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <!-- Filter canvas -->
-        <div id="filter" ng-mousedown="connectEffectGain()" ng-mousemove="addEffects($event)" ng-mouseup="removeEffects($event)" ng-mouseout="removeEffects($event)"></div>
 
-      </div>
-      <div class="col-md-4">
-        <!-- Delay canvas -->
-        <div id="delay" ng-mousedown="connectDelayGain()" ng-mousemove="addDelay($event)" ng-mouseup="removeDelay($event)" ng-mouseout="removeDelay($event)"></div>
-      </div>
-      <div class="col-md-4">
-        <div class="thumbnail">
-          <!-- <img src="img/Adventure-Club.jpg" alt="Adventure Club"> -->
-          <div class="caption">
-            <h3>Need Your Heart (ft. Kai)</h3>
-            <p>Adventure Club</p>
-            <!-- Playback Rate slider -->
-            <div class="progress-box" ng-app>
-              <div class="percentage-cur" ng-init="selectedRange=100">
-                <span class="num"><strong>Playback Rate:</strong> {{ selectedRange }} %</span>
-              </div>
-              <div class="progress-bar progress-bar-slider">
-                <input class="progress-slider" type="range" min="50" max="200" ng-model="selectedRange" ng-change="changePlaybackRate(selectedRange)">
-                <div class="inner" ng-style="{ width: selectedRangePercent || '33.3%' }"></div>
-              </div>
-            </div>
-            <div id="song-controls">
-              <i class="fa fa-play" ng-click="playSong()"></i>
-              <i class="fa fa-stop" ng-click="pauseSong()"></i>
-            </div>
-          </div>
-        </div> <!-- Thumbnail -->
-      </div> <!-- Column -->
-    </div> <!-- Row -->
-  </div> <!-- Container -->
-</div> <!-- DJ wrapper -->
-
-
-<!-- <div>
-    <div id="login">
-     <h1>First, log in to spotify</h1>
-     <a href="/login">Log in</a>
-    </div>
-    <div id="loggedin">
-    </div>
- </div>
-
- <script id="loggedin-template" type="text/x-handlebars-template">
-    <h1>Logged in as {{display_name}}</h1>
-    <img id="avatar" width="200" src="{{images.0.url}}" />
-    <dl>
-     <dt>Display name</dt><dd>{{display_name}}</dd>
-     <dt>Username</dt><dd>{{id}}</dd>
-     <dt>Email</dt><dd>{{email}}</dd>
-     <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
-     <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
-     <dt>Profile Image</dt><dd>{{images.0.url}}</dd>
-    </dl>
-    <p><a href="/">Log in again</a></p>
- </script>
-
-
-
- -->
