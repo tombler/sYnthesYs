@@ -8,11 +8,12 @@
       <ul class="nav nav-tabs pull-right">
         <li role="presentation" class='active'><a href="#/keyboard"><img src="img/keyboard-icon.jpg"></a></li>
         <li role="presentation"><a href="#/custom" ng-click="closeAudio()"><img src="img/drumsticks-icon.png"></a></li>
-        <li role="presentation"><a href="#/dj"><img src="img/DJ-icon.png"></a></li>
+        <li role="presentation"><a href="#/dj" ng-click="closeAudio()"><img src="img/DJ-icon.png"></a></li>
       </ul>
     </div>
 </nav>
 
+<!-- Modal for switching between instruments -->
 <div class="modal js-loading-bar">
  <div class="modal-dialog">
    <div class="modal-content">
@@ -23,7 +24,7 @@
      </div>
    </div>
  </div>
-</div>
+</div> <!-- End modal -->
 
 
 <div class="container">
@@ -38,10 +39,10 @@
                             <label class="btn" ng-model="radioModel" btn-radio="'Instrument'">Instrument</label>
                             <!-- <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Custom'">Custom</label> -->
                         </div>
-                        <select class="form-control" ng-options="type for type in waveTypeList" ng-model="waveType" ng-show="radioModel === 'Waves'" ng-change="load()">
+                        <select class="form-control" ng-model="waveType" ng-options="type for type in waveTypeList" ng-show="radioModel === 'Waves'" ng-change="loadNewWave()">
                             <option value="">Choose Wave Shape</option>
                         </select>
-                        <select class="form-control" ng-show="radioModel === 'Instrument'" ng-options="instrument for instrument in instruments.instrumentNames" ng-model="chosenInstrument" ng-change="chooseInstrument(chosenInstrument)">
+                        <select class="form-control" ng-show="radioModel === 'Instrument'" ng-model="chosenInstrument" ng-options="instrument for instrument in instruments.instrumentNames" ng-change="chooseInstrument(chosenInstrument)">
                             <option value="">Choose Your Instrument</option>
                         </select>
                         <!-- <form class="form" ng-show="radioModel === 'Custom'">
@@ -53,84 +54,82 @@
                             </div>
                             <button type="submit" class="btn btn-primary" ng-click="createWave(customWaveValues)">Create Wave</button>
                         </form> -->
-                    </div>
-                </div>
-            </div>
+
+                    </div> <!-- Column -->
+                </div> <!-- Row -->
+            </div> <!-- Page wrapper -->
             
 
             <div class="page-wrapper">
                 <div class="container">
+
                     <div class="row row-centered">
-                        <!-- <div class="spinner-loader">
-                          Loading…
-                        </div> -->
                         <div class="col-md-9 col-centered">
                             <div id="keyboard"></div>
-                        </div>
+                        </div> <!-- Column -->
+                    </div> <!-- Row -->
 
-                        
-                
-                    </div>
                     <div class="row row-centered">
                         <div class="col-md-8 col-centered table-div">
-                        <p id="table-title" ng-click="toggleTable()">Note-To-Keystroke Map</p>
-                        <table class="table table-condensed table-hover">
-                            <thead>
-                              <tr>
-                                <th></th>
-                              </tr>
-                            </thead>
-                            <tbody ng-hide="showTable">
-                              <tr>
-                                <th>Note</th>
-                                <td>C</td>
-                                <td>C#</td>
-                                <td>D</td>
-                                <td>D#</td>
-                                <td>E</td>
-                                <td>F</td>
-                                <td>F#</td>
-                                <td>G</td>
-                                <td>G#</td>
-                                <td>A</td>
-                                <td>A#</td>
-                                <td>B</td>
-                                <td>C</td>
-                                <td>C#</td>
-                                <td>D</td>
-                                <td>D#</td>
-                                <td>E</td>
-                                <td>F</td>
-                                <td>F#</td>
-                                <td>G</td>
-                              </tr>
-                              <tr>
-                                <th>Key</th>
-                                <td>A</td>
-                                <td>W</td>
-                                <td>S</td>
-                                <td>E</td>
-                                <td>D</td>
-                                <td>F</td>
-                                <td>T</td>
-                                <td>G</td>
-                                <td>Y</td>
-                                <td>H</td>
-                                <td>U</td>
-                                <td>J</td>
-                                <td>K</td>
-                                <td>O</td>
-                                <td>L</td>
-                                <td>P</td>
-                                <td>;</td>
-                                <td>'</td>
-                                <td>]</td>
-                                <td>\</td>
-                              </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    </div>
+                            <p id="table-title" ng-click="toggleTable()">Note-To-Keystroke Map</p>
+                            <table class="table table-condensed table-hover">
+                                <thead>
+                                  <tr>
+                                    <th></th>
+                                  </tr>
+                                </thead>
+                                <tbody ng-hide="showTable">
+                                  <tr>
+                                    <th>Note</th>
+                                    <td>C</td>
+                                    <td>C#</td>
+                                    <td>D</td>
+                                    <td>D#</td>
+                                    <td>E</td>
+                                    <td>F</td>
+                                    <td>F#</td>
+                                    <td>G</td>
+                                    <td>G#</td>
+                                    <td>A</td>
+                                    <td>A#</td>
+                                    <td>B</td>
+                                    <td>C</td>
+                                    <td>C#</td>
+                                    <td>D</td>
+                                    <td>D#</td>
+                                    <td>E</td>
+                                    <td>F</td>
+                                    <td>F#</td>
+                                    <td>G</td>
+                                  </tr>
+                                  <tr>
+                                    <th>Key</th>
+                                    <td>A</td>
+                                    <td>W</td>
+                                    <td>S</td>
+                                    <td>E</td>
+                                    <td>D</td>
+                                    <td>F</td>
+                                    <td>T</td>
+                                    <td>G</td>
+                                    <td>Y</td>
+                                    <td>H</td>
+                                    <td>U</td>
+                                    <td>J</td>
+                                    <td>K</td>
+                                    <td>O</td>
+                                    <td>L</td>
+                                    <td>P</td>
+                                    <td>;</td>
+                                    <td>'</td>
+                                    <td>]</td>
+                                    <td>\</td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div> <!-- Column -->
+                    </div> <!-- Row -->
+
                     <!-- <div class="row">
                         <h1>Recorder.js simple WAV export example</h1>
 
@@ -147,9 +146,9 @@
                         <pre id="log"></pre>
  
                     </div> -->
-                </div>
-            </div>
 
-        </div>
-    </div>
-</div>
+                </div> <!-- Container  -->
+            </div> <!-- Page wrapper -->
+        </div> <!-- Column -->
+    </div> <!-- Row -->
+</div> <!-- Container -->

@@ -68,10 +68,10 @@
       </div>
       <div class="col-md-3">
         <div id="song-controls">
-          <i class="fa fa-fast-backward" ng-click="prevSong()"></i>
-          <i class="fa fa-play" ng-click="playSong()"></i>
-          <i class="fa fa-stop" ng-click="pauseSong()"></i>
-          <i class="fa fa-fast-forward" ng-click="nextSong()"></i>
+          <i class="fa fa-fast-backward" ng-click="prevSong()" ng-show="bufferCounter != 0"></i>
+          <i class="fa fa-play" ng-click="playSong()" ng-show="showPlayButton"></i>
+          <i class="fa fa-stop" ng-click="pauseSong()" ng-hide="showPlayButton"></i>
+          <i class="fa fa-fast-forward" ng-click="nextSong()" ng-show="bufferCounter != 3"></i>
           
 
          <i class="fa fa-question" instructions-popover popover-html="

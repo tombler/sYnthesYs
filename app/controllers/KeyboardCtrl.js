@@ -20,13 +20,13 @@ app.controller("KeyboardCtrl", ["$scope", "instruments", "storage", function ($s
     // Gets gain for app from app.js.
     var gain = storage.gain;
 
-    $scope.waveType = "";
+    // $scope.waveType = "";
     $scope.waveTypeList = ['Sine', 'Sawtooth', 'Triangle'];
     $scope.placeholderWaveValues = [{value: "Enter a number 0-99"}, {value: "Enter a number 0-99"}, {value: "Enter a number 0-99"}, {value: "Enter a number 0-99"}, {value: "Enter a number 0-99"}];
     $scope.customWaveValues = [];
     $scope.radioModel = 'Waves';
     $scope.instruments = instruments; // Grabs object from preProgrammed.js factory.
-    $scope.chosenInstrument = "";
+    // $scope.chosenInstrument = "";
     $scope.showTable = true;
 
     // Sets gain value and connects to computer speakers.
@@ -44,6 +44,8 @@ app.controller("KeyboardCtrl", ["$scope", "instruments", "storage", function ($s
     $scope.closeAudio = function () {
         gain.disconnect(context.destination);
         $scope.vco = null;
+        // $scope.waveType = '';
+        // $scope.chosenInstrument = '';
     };
 
     // Sets oscillator values based on instrument chosen in select box.
@@ -101,11 +103,10 @@ app.controller("KeyboardCtrl", ["$scope", "instruments", "storage", function ($s
     keyboard.keyDown = function (note, frequency) {
         // console.log(frequency);
         $scope.vco = context.createOscillator();
-
         // Checks which radio button is selected and sets oscillator values appropriately.
         if ($scope.radioModel === 'Waves') {
-            console.log($scope.waveType.toLowerCase());
-            $scope.vco.type = $scope.waveType.toLowerCase(); 
+            // console.log($scope.waveType.toLowerCase());
+            $scope.vco.type = $scope.waveType.toLowerCase()
         } else if ($scope.radioModel === 'Custom' || $scope.radioModel === 'Instrument') {
             $scope.vco.setPeriodicWave($scope.customWave);    
         }
@@ -147,6 +148,8 @@ app.controller("KeyboardCtrl", ["$scope", "instruments", "storage", function ($s
             $bar.removeClass('animate');
             $modal.modal('hide');
         }, 1500);
+
+
     };
         
 }]);

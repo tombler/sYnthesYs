@@ -525,6 +525,10 @@ h1 {
   padding-right: none !important;
 }
 
+.song-image img {
+  max-height: 75px;
+}
+
 /*Playback rate slider*/
 
 .progress-box {

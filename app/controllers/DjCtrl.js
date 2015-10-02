@@ -93,7 +93,7 @@ app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterMod
 
 // ***************** GET AUDIO ******************** //
 
-    var bufferCounter = 0;
+    $scope.bufferCounter = 0;
     $scope.songBuffers = [];
     var loader = new audioSampleLoader();
 
@@ -111,41 +111,39 @@ app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterMod
 
     $scope.nextSong = function () {
         // Create counter and add to it when nextSong is clicked.
-        bufferCounter += 1;
+        $scope.bufferCounter += 1;
         console.log($scope.source.buffer);
         // run $scope.pauseSong()
         if ($scope.masterGain.gain.value != 0) {
             $scope.pauseSong();
         }
-        // run $scope.playSong($scope.songBuffers[bufferCounter]);
-        $scope.playSong($scope.songBuffers[bufferCounter]);
+        // run $scope.playSong($scope.songBuffers[$scope.bufferCounter]);
+        $scope.playSong($scope.songBuffers[$scope.bufferCounter]);
 
-        $scope.currentSongTitle = $scope.songData[bufferCounter].title;
-        $scope.currentSongArtist = $scope.songData[bufferCounter].artist;
-        $scope.currentSongImg = $scope.songData[bufferCounter].img;
+        $scope.currentSongTitle = $scope.songData[$scope.bufferCounter].title;
+        $scope.currentSongArtist = $scope.songData[$scope.bufferCounter].artist;
+        $scope.currentSongImg = $scope.songData[$scope.bufferCounter].img;
     };
 
     $scope.prevSong = function () {
-        bufferCounter -= 1;
+        $scope.bufferCounter -= 1;
         if ($scope.masterGain.gain.value != 0) {
             $scope.pauseSong();
         }
-        $scope.playSong($scope.songBuffers[bufferCounter]);
+        $scope.playSong($scope.songBuffers[$scope.bufferCounter]);
 
-        $scope.currentSongTitle = $scope.songData[bufferCounter].title;
-        $scope.currentSongArtist = $scope.songData[bufferCounter].artist;
-        $scope.currentSongImg = $scope.songData[bufferCounter].img;
+        $scope.currentSongTitle = $scope.songData[$scope.bufferCounter].title;
+        $scope.currentSongArtist = $scope.songData[$scope.bufferCounter].artist;
+        $scope.currentSongImg = $scope.songData[$scope.bufferCounter].img;
     };
 
+    $scope.showPlayButton = true;
     // Creates buffer source and grabs songBuffer from $http call above. 
     $scope.playSong = function (buffer) {
         // console.log(buffer);
+        $scope.showPlayButton = false;
         $scope.source = context.createBufferSource();
-        if (buffer == undefined) {
-            $scope.source.buffer = $scope.songBuffers[0];    
-        } else {
-            $scope.source.buffer = buffer; 
-        }
+        $scope.source.buffer = $scope.songBuffers[$scope.bufferCounter]; 
         $scope.masterGain = context.createGain();
         $scope.masterGain.gain.value = 1;
         $scope.source.connect(analyser);
@@ -155,11 +153,7 @@ app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterMod
 
         // Create a 2nd instance of song playing for effects, set gain to 0.
         $scope.effectSource = context.createBufferSource();
-        if (buffer == undefined) {
-            $scope.effectSource.buffer = $scope.songBuffers[0];    
-        } else {
-            $scope.effectSource.buffer = buffer; 
-        }      
+        $scope.effectSource.buffer = $scope.songBuffers[$scope.bufferCounter]; 
         $scope.effectGainNode = context.createGain();
         $scope.effectGainNode.gain.value = 0;
         $scope.effectSource.connect(analyser);
@@ -169,6 +163,7 @@ app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterMod
     };
 
     $scope.pauseSong = function () {
+        $scope.showPlayButton = true;
         $scope.masterGain.gain.value = 0;
         $scope.source.disconnect(analyser);
         analyser.disconnect($scope.masterGain);
