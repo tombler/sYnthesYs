@@ -20,21 +20,17 @@ app.controller("KeyboardCtrl", ["$scope", "instruments", "storage", function ($s
     // Gets gain for app from app.js.
     var gain = storage.gain;
 
-    // $scope.waveType = "";
     $scope.waveTypeList = ['Sine', 'Sawtooth', 'Triangle'];
     $scope.placeholderWaveValues = [{value: "Enter a number 0-99"}, {value: "Enter a number 0-99"}, {value: "Enter a number 0-99"}, {value: "Enter a number 0-99"}, {value: "Enter a number 0-99"}];
     $scope.customWaveValues = [];
     $scope.radioModel = 'Waves';
     $scope.instruments = instruments; // Grabs object from preProgrammed.js factory.
-    // $scope.chosenInstrument = "";
     $scope.showTable = true;
 
     // Sets gain value and connects to computer speakers.
     gain.gain.value = 0.5;
     gain.connect(context.destination);
     nodes = [];
-    // recordingFactory();
-    // console.log(Recorder);
     
     // Unbinds events from other pages.
     $(document).unbind('keydown');
@@ -44,8 +40,6 @@ app.controller("KeyboardCtrl", ["$scope", "instruments", "storage", function ($s
     $scope.closeAudio = function () {
         gain.disconnect(context.destination);
         $scope.vco = null;
-        // $scope.waveType = '';
-        // $scope.chosenInstrument = '';
     };
 
     // Sets oscillator values based on instrument chosen in select box.

@@ -519,3 +519,53 @@
 
 
         // playMetronome();
+
+                // console.log(buffer);
+        // console.log($scope.songBuffers[$scope.bufferCounter].duration);
+        // $scope.currentSongTime = $scope.songBuffers[$scope.bufferCounter].songLength;
+        // $scope.setSongTime = $interval(getSongTime, 1000);
+
+
+
+
+          // $scope.currentSongTime = "4:11";
+    // $scope.minutes = 0;
+    // $scope.seconds = 0;
+
+    // function getSongTime () {
+    //     $scope.minutes = Math.floor($scope.seconds / 60);
+    //     if ($scope.seconds == 59) {
+    //         $scope.seconds = 0;
+    //     }
+    //     $scope.seconds += 1;
+    // }
+
+
+
+
+        function calculateSongTimes () {
+        for (var i = 0; i < $scope.songBuffers.length; i++) {
+            // console.log($scope.songBuffers[i].duration);
+            var minutes = Math.floor($scope.songBuffers[i].duration / 60);
+            var decSeconds = ($scope.songBuffers[i].duration / 60) - Math.floor($scope.songBuffers[i].duration / 60);
+            var seconds = Math.floor(60 * decSeconds);
+            $scope.songBuffers[i].songLength = minutes + ":" + seconds;
+            // console.log($scope.songBuffers[i].songLength)
+        }
+    }
+
+
+    // $scope.currentSongTime = 0;
+    var myAudio = document.querySelector('audio');
+    $scope.source = context.createMediaElementSource(myAudio);
+    $scope.masterGain = context.createGain();
+    $scope.masterGain.gain.value = 1;
+    $scope.source.connect($scope.masterGain);
+    $scope.masterGain.connect(context.destination); // Connects source to audio context
+
+    // $scope.effectSource = context.createMediaElementSource(myAudio);
+    $scope.effectGainNode = context.createGain();
+    $scope.effectGainNode.gain.value = 0;
+    // $scope.effectSource.connect(analyser);
+    $scope.effectGainNode.connect(context.destination); 
+  

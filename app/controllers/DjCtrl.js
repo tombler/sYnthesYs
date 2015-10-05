@@ -1,4 +1,4 @@
-app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterModel", "audioSampleLoader", function ($scope, instruments, storage, $http, WaterModel, audioSampleLoader) {
+app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterModel", "audioSampleLoader", "$interval", function ($scope, instruments, storage, $http, WaterModel, audioSampleLoader, $interval) {
 
     
 // Modal instructions on page load.
@@ -99,15 +99,27 @@ app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterMod
 
     loader.src = ['sounds/Clean-Bandit.mp3', 'sounds/fat-bottomed-girls.mp3', 'sounds/needYourHeart.mp3', 'sounds/Sabali.mp3'];
     loader.ctx = context;
-    loader.onload = function () { 
+    loader.onload = function () {
+        console.log(loader.response); 
         for (var i = 0; i < loader.response.length; i++) {
             $scope.songBuffers.push(loader.response[i]);
         }
+        // calculateSongTimes();
     };
     loader.onerror = function () { 
         alert('Awwwwww snap!');
     };
     loader.send();
+
+
+// **************** CUSTOM PLAYER ****************** //
+
+    // $scope.currentSongTime = 0;
+
+
+
+
+// ***************** SONG PLAYING FUNCTIONS ************** //
 
     $scope.nextSong = function () {
         // Create counter and add to it when nextSong is clicked.
@@ -125,6 +137,8 @@ app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterMod
         $scope.currentSongImg = $scope.songData[$scope.bufferCounter].img;
     };
 
+   
+
     $scope.prevSong = function () {
         $scope.bufferCounter -= 1;
         if ($scope.masterGain.gain.value != 0) {
@@ -137,11 +151,15 @@ app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterMod
         $scope.currentSongImg = $scope.songData[$scope.bufferCounter].img;
     };
 
+
+    // var myAudio = document.getElementById('audio');
+    // console.log(myAudio);
+    // $scope.source = context.createMediaElementSource(myAudio);
+
     $scope.showPlayButton = true;
     // Creates buffer source and grabs songBuffer from $http call above. 
     $scope.playSong = function (buffer) {
-        // console.log(buffer);
-        $scope.showPlayButton = false;
+        $scope.showPlayButton = false;        
         $scope.source = context.createBufferSource();
         $scope.source.buffer = $scope.songBuffers[$scope.bufferCounter]; 
         $scope.masterGain = context.createGain();
