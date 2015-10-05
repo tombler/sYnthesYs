@@ -1,4 +1,4 @@
-app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterModel", "audioSampleLoader", "$interval", function ($scope, instruments, storage, $http, WaterModel, audioSampleLoader, $interval) {
+app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterModel", "audioSampleLoader", "$interval", "$timeout", function ($scope, instruments, storage, $http, WaterModel, audioSampleLoader, $interval, $timeout) {
 
     
 // Modal instructions on page load.
@@ -115,7 +115,9 @@ app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterMod
 // **************** CUSTOM PLAYER ****************** //
 
     // $scope.currentSongTime = 0;
-
+$scope.songsLoading = $timeout(function () {
+    $('.navbar-fixed-bottom').removeClass('loader');
+}, 5000);
 
 
 
