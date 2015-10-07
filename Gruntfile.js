@@ -13,6 +13,19 @@ module.exports = function(grunt) {
   //         }
   //     }
   // },
+  uglify: {
+    options: {
+
+    },
+  build: {
+      src: ['bower_components/jquery/dist/jquery.min.js', 'bower_components/raphael/raphael.js', 'bower_components/bootstrap/dist/js/bootstrap.min.js',
+            'bower_components/angular/angular.min.js',
+            'bower_components/angular-bootstrap/ui-bootstrap.min.js',
+            'bower_components/angular-route/angular-route.js',
+            'bower_components/qwerty-hancock/dist/qwerty-hancock.js'],
+      dest: 'dependencies.min.js'
+    }
+  },
   bower: {
       dev: {
           base: 'bower_components', /* the path to the bower_components directory */
@@ -68,13 +81,14 @@ module.exports = function(grunt) {
 
  grunt.loadNpmTasks('grunt-contrib-imagemin');
  grunt.loadNpmTasks('grunt-newer');
+ grunt.loadNpmTasks('grunt-contrib-uglify');
 
  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
  
  grunt.registerTask('default', [
     'newer:imagemin'
 ]);
- grunt.registerTask('default', ['jshint',  'watch', 'sass']); // Add 'babel' for babel
+ grunt.registerTask('default', ['jshint',  'watch', 'sass', 'uglify']); // Add 'babel' for babel
 
 };
 

@@ -1,4 +1,4 @@
-app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterModel", "audioSampleLoader", "$interval", "$timeout", function ($scope, instruments, storage, $http, WaterModel, audioSampleLoader, $interval, $timeout) {
+app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterModel", "audioSampleLoader", "$interval", "$timeout", "Upload", function ($scope, instruments, storage, $http, WaterModel, audioSampleLoader, $interval, $timeout, Upload) {
 
     
 // Modal instructions on page load.
@@ -112,12 +112,31 @@ app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterMod
     loader.send();
 
 
-// **************** CUSTOM PLAYER ****************** //
+// **************** SONGS LOADING TIMEOUT ****************** //
 
     // $scope.currentSongTime = 0;
 $scope.songsLoading = $timeout(function () {
     $('.navbar-fixed-bottom').removeClass('loader');
 }, 5000);
+
+
+
+// **************** UPLOAD FILES ********************************* //
+
+    // upload on file select or drop
+    $scope.upload = function (file) {
+        Upload.upload({
+            url: '/usr/local/bin/data',
+            data: {file}
+        }).then(function (resp) {
+            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+        });
+    };
 
 
 
@@ -165,7 +184,7 @@ $scope.songsLoading = $timeout(function () {
         $scope.source = context.createBufferSource();
         $scope.source.buffer = $scope.songBuffers[$scope.bufferCounter]; 
         $scope.masterGain = context.createGain();
-        $scope.masterGain.gain.value = 1;
+        $scope.masterGain.gain.value = 0.1;
         $scope.source.connect(analyser);
         analyser.connect($scope.masterGain);
         $scope.masterGain.connect(context.destination); // Connects source to audio context
@@ -199,7 +218,7 @@ $scope.songsLoading = $timeout(function () {
         $scope.effectGainNode.disconnect(context.destination);
         $scope.effectGainNode.connect($scope.filter);
         $scope.filter.connect(context.destination);
-        $scope.effectGainNode.gain.value = 5;
+        $scope.effectGainNode.gain.value = 0.3;
         $scope.masterGain.gain.value = 0;
     };
 
@@ -237,7 +256,7 @@ $scope.songsLoading = $timeout(function () {
 
         $scope.effectGainNode.connect(context.destination);
         $scope.effectGainNode.gain.value = 0;
-        $scope.masterGain.gain.value = 1;
+        $scope.masterGain.gain.value = 0.1;
     };
 
     $scope.addDelay = function ($event) {
@@ -249,8 +268,8 @@ $scope.songsLoading = $timeout(function () {
             $scope.effectGainNode.disconnect(context.destination);
             //Sets delay time to number from 0.01 - 2.0
             $scope.delayEffect.delayTime.value = $event.offsetY * 0.00575;
-            $scope.effectGainNode.gain.value = 0.8;
-            $scope.masterGain.gain.value = 0.5;
+            $scope.effectGainNode.gain.value = 0.05;
+            $scope.masterGain.gain.value = 0.05;
 
             $scope.effectSource.connect(analyser);
             analyser.connect($scope.delayEffect);
@@ -264,7 +283,7 @@ $scope.songsLoading = $timeout(function () {
         // Let delay feedback for 1.5 seconds after mouse release.
         setTimeout(function () {
             $scope.effectGainNode.gain.value = 0;
-            $scope.masterGain.gain.value = 1;
+            $scope.masterGain.gain.value = 0.1;
         }, 1500);
         
     };
@@ -282,25 +301,6 @@ $scope.songsLoading = $timeout(function () {
     $scope.closeAudio = function () {
         $scope.masterGain.disconnect(context.destination);
     };
-
-
-    // Spotify Test
-
-    // var my_client_id = '076ef4c8ecbc45ba94936575d48b7df8'; // Your client id
-    // var my_secret = 'e4148233ddef4415b3889173be8e2174'; // Your secret
-    // var redirect_uri = 'http://localhost:8000/#/dj/'; // Your redirect uri
-    // var scopes = 'user-read-private user-read-email'
-
-    
-
-    // $http({
-    //     url: 'https://accounts.spotify.com/authorize/?client_id=076ef4c8ecbc45ba94936575d48b7df8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8000&scope=user-read-private%20user-read-email&state=34fFs29kd09',
-    //     method: 'GET'
-    // })
-    // .success(function (data) {
-    //     console.log(data);
-    // });
-
 
 
 }]);

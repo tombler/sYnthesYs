@@ -19,6 +19,7 @@
     "angular": "~1.4.4",
     "angular-route": "~1.4.4",
     "angularfire": "~1.1.2",
-    "qwerty-hancock": "~0.5.1"
+    "qwerty-hancock": "~0.5.1",
+    "ng-file-upload": "~9.0.6"
   }
 }
