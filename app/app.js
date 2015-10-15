@@ -58,7 +58,13 @@ app
             controller: 'DjCtrl'
             
         }).
+        when('/testupload', {
+            templateUrl: './app/templates/testUpload.html',
+            controller: 'UploadCtrl'
+            
+        }).
         otherwise({
             redirectTo: '/home'
         });
 }]);
+
