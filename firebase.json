@@ -1,0 +1,12 @@
+{
+  "firebase": "synthesys",
+  "public": "/",
+  "ignore": [
+    "firebase.json",
+    "**/bower_components/**",
+    "**/node_modules/**",
+    "img/eleven.gif",
+    "presentation-template.html",
+    "server.js"
+  ]
+}
