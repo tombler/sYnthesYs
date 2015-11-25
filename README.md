@@ -13,7 +13,9 @@ See https://synthesys.firebaseapp.com/ for a demo. Because of Web Audio API brow
 * Web Audio API (https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
 * AngularJS
 * Bootstrap
-* Qwerty Hancock (for keyboard view - )
+* Qwerty Hancock (for keyboard view - http://stuartmemo.com/qwerty-hancock/)
+* RaphaelJS (animation - http://raphaeljs.com/)
+* WaterCanvas (animation - http://code.almeros.com/water-ripple-canvas-and-javascript#.VlXlEN-rRPM)
 
 ## Installation
 
