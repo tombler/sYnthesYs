@@ -85,17 +85,22 @@ nav {
     animation: enter_slide 2.25s ease-out forwards;
     -webkit-animation: enter_slide 2.25s ease-out forwards;
     text-align: center;
-    background: url(http://chrome-jam-static.commondatastorage.googleapis.com/img/interface/jam_button.png) no-repeat;
+    /*background: url(http://chrome-jam-static.commondatastorage.googleapis.com/img/interface/jam_button.png) no-repeat;*/
 
     display: block;
     width: 199px;
     height: 109px;
-    background: url(http://chrome-jam-static.commondatastorage.googleapis.com/img/interface/jam_button.png) no-repeat;
+    background: #00AAAA;
     line-height: 115px;
     color: #fff;
     font-size: 24px;
     text-align: center;
     cursor: pointer;
+    border-radius: 5px;
+}
+
+#enter:hover {
+  background: #00CCAA;
 }
 
 /*Navbar styling:*/
