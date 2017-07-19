@@ -1,4 +1,4 @@
-var app = angular.module("sYnthesYs", ['ngRoute', 'ui.bootstrap', 'ngFileUpload']);
+var app = angular.module("sYnthesYs", ['ngRoute', 'ui.bootstrap']);
 
 app
 

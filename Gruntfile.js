@@ -1,30 +1,30 @@
 module.exports = function(grunt) {
 
-
-
  grunt.initConfig({
-  // babel: {
-  //     options: {
-  //         sourceMap: true
-  //     },
-  //     dist: {
-  //         files: {
-  //             '': '' // NewFilenamePath: FileToTranspile
-  //         }
-  //     }
-  // },
   uglify: {
-    options: {
-
-    },
-  build: {
-      src: ['bower_components/jquery/dist/jquery.min.js', 'bower_components/raphael/raphael.js', 'bower_components/bootstrap/dist/js/bootstrap.min.js',
-            'bower_components/angular/angular.min.js',
-            'bower_components/angular-bootstrap/ui-bootstrap.min.js',
-            'bower_components/angular-route/angular-route.js',
-            'bower_components/qwerty-hancock/dist/qwerty-hancock.js'],
-      dest: 'dependencies.min.js'
+    min: {
+      files: {
+        'synthesys.min.js': [
+          'app/app.js',
+          "app/instruments/audioSampleLoader.js",
+          "app/instruments/watercanvas.js",
+          "app/instruments/preProgrammed.js",
+          "app/controllers/HomeCtrl.js",
+          "app/controllers/KeyboardCtrl.js",
+          "app/controllers/CustomSoundCtrl.js",
+          "app/controllers/DjCtrl.js",
+          "app/controllers/UploadCtrl.js"
+        ]
+      }
     }
+  },
+  build: {
+    src: ['bower_components/jquery/dist/jquery.min.js', 'bower_components/raphael/raphael.js', 'bower_components/bootstrap/dist/js/bootstrap.min.js',
+          'bower_components/angular/angular.min.js',
+          'bower_components/angular-bootstrap/ui-bootstrap.min.js',
+          'bower_components/angular-route/angular-route.js',
+          'bower_components/qwerty-hancock/dist/qwerty-hancock.js'],
+    dest: 'dependencies.min.js'
   },
   bower: {
       dev: {

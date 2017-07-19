@@ -2,3 +2,4 @@ bower_components
 node_modules
 img
 sounds
+.DS_Store

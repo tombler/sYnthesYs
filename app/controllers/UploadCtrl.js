@@ -1,10 +1,10 @@
 app.controller("UploadCtrl", ["$scope", "Upload", function ($scope, Upload) {
 
-    // upload on file select or drop
+    // // upload on file select or drop
     $scope.upload = function (file) {
         Upload.upload({
             url: '/usr/local/bin/data',
-            data: {file}
+            data: {}
         }).then(function (resp) {
             console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
         }, function (resp) {

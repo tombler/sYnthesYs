@@ -27,8 +27,9 @@ app.controller("CustomSoundCtrl", ["$scope", "storage", "$document", "$http", "$
             $scope.bufferPads.push(loader.response[i]);
         }
     };
-    loader.onerror = function () { 
-        alert('Awwwwww snap!');
+    loader.onerror = function (err) { 
+        console.log(err);
+        // alert('Awwwwww snap!');
     };
     loader.send();
 

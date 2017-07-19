@@ -1,4 +1,4 @@
-app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterModel", "audioSampleLoader", "$interval", "$timeout", "Upload", function ($scope, instruments, storage, $http, WaterModel, audioSampleLoader, $interval, $timeout, Upload) {
+app.controller("DjCtrl", ["$scope", "instruments", "storage", "$http", "WaterModel", "audioSampleLoader", "$interval", "$timeout", function ($scope, instruments, storage, $http, WaterModel, audioSampleLoader, $interval, $timeout) {
 
     
 // Modal instructions on page load.
@@ -124,19 +124,19 @@ $scope.songsLoading = $timeout(function () {
 // **************** UPLOAD FILES ********************************* //
 
     // upload on file select or drop
-    $scope.upload = function (file) {
-        Upload.upload({
-            url: '/usr/local/bin/data',
-            data: {file}
-        }).then(function (resp) {
-            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
-        }, function (resp) {
-            console.log('Error status: ' + resp.status);
-        }, function (evt) {
-            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-        });
-    };
+    // $scope.upload = function (file) {
+    //     Upload.upload({
+    //         url: '/usr/local/bin/data',
+    //         data: {}
+    //     }).then(function (resp) {
+    //         console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+    //     }, function (resp) {
+    //         console.log('Error status: ' + resp.status);
+    //     }, function (evt) {
+    //         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+    //         console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+    //     });
+    // };
 
 
 
